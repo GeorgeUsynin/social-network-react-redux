@@ -1,0 +1,10 @@
+.item {
+    color: aqua;
+}
+.item.active{
+    color: chartreuse;
+}
+
+.post img{
+    width: 50px;
+}
