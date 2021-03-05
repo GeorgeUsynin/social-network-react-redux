@@ -2,9 +2,12 @@
     color: aqua;
 }
 .item.active{
-    color: chartreuse;
+    color: black;
 }
 
 .post img{
     width: 50px;
+}
+.post span{
+    color: red;
 }
