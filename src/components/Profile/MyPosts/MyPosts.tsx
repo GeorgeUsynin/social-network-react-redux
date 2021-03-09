@@ -5,7 +5,7 @@ import Post from "./Post/Post";
 
 const MyPosts = () => {
     return (
-        <div>
+        <div className={classes.post_wrapper}>
             <div>
                 My posts
             </div>
