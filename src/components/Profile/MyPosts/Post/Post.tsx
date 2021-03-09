@@ -7,7 +7,7 @@ type PostPropsType = {
 }
 
 const Post: React.FC<PostPropsType> = (props) => {
-    debugger
+
     if (props.likeCounts === 1) {
         return (
             <div className={classes.post}>

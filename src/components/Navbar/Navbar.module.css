@@ -4,6 +4,10 @@
 }
 
 .item a{
-    color: antiquewhite;
+    color: white;
     text-decoration: none;
+}
+
+.item a.active {
+    color: crimson;
 }
