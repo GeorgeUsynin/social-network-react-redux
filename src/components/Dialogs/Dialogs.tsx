@@ -1,33 +1,24 @@
 import React from "react";
 import classes from "./Dialogs.module.css"
+import DialogItem from "./DialogItem/DialogItem";
+import Message from "./Message/Message";
+
 
 const Dialogs = (props: any) => {
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialog_items}>
-                <div className={`${classes.dialog} ${classes.active}`}>
-                    George
-                </div>
-                <div className={classes.dialog}>
-                    Paul
-                </div>
-                <div className={classes.dialog}>
-                    Natasha
-                </div>
-                <div className={classes.dialog}>
-                    Alexander
-                </div>
-                <div className={classes.dialog}>
-                    Vladislav
-                </div>
-                <div className={classes.dialog}>
-                    Valera
-                </div>
+                <DialogItem name="George" id="1"/>
+                <DialogItem name="Paul" id="2"/>
+                <DialogItem name="Natasha" id="3"/>
+                <DialogItem name="Alexander" id="4"/>
+                <DialogItem name="Vladislav" id="5"/>
+                <DialogItem name="Valera" id="6"/>
             </div>
             <div className={classes.messages}>
-                <div className={classes.message}>Hi</div>
-                <div className={classes.message}>How is your wellness?</div>
-                <div className={classes.message}>Where do you go?</div>
+                <Message message="Hi"/>
+                <Message message="How is your wellness?"/>
+                <Message message="Where do you go?"/>
             </div>
         </div>
     )
