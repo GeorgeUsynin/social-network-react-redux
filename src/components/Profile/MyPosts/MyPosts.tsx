@@ -10,7 +10,12 @@ const MyPosts = () => {
                 My posts
             </div>
             <div>
-                New posts
+                <div>
+                    <textarea></textarea>
+                </div>
+                <div>
+                    <button>Add</button>
+                </div>
             </div>
             <div className={classes.posts}>
                 <Post message="Hi, my name is George and this is my first social network project" likeCounts={44}/>
