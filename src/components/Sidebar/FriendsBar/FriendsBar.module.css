@@ -1,0 +1,14 @@
+.friends_bar{
+    margin-top: 50px;
+}
+
+.friends_bar > h2 {
+    color: beige;
+    text-align: center;
+}
+
+.friends_info_wrapper{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    column-gap: 10px;
+}

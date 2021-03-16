@@ -1,0 +1,16 @@
+.item{
+    margin-bottom: 20px;
+}
+
+.item a{
+    color: #54595F;
+    text-decoration: none;
+}
+
+.item a.active {
+    color: beige;
+}
+
+.item a:hover{
+    color: beige;
+}

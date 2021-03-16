@@ -1,9 +1,16 @@
 import React from 'react';
 import classes from "./MyPosts.module.css";
 import Post from "./Post/Post";
+import {PostType} from "../../../redux/state";
 
+type MyPostsPropsType = {
+    posts: Array<PostType>
+}
 
-const MyPosts = () => {
+const MyPosts: React.FC<MyPostsPropsType> = (props) => {
+
+    const mappedPosts = props.posts.map(p=> <Post key={p.id} id={p.id} message={p.message} likeCounts={p.likeCounts}/>)
+
     return (
         <div className={classes.post_wrapper}>
             <div>
@@ -18,8 +25,9 @@ const MyPosts = () => {
                 </div>
             </div>
             <div className={classes.posts}>
-                <Post message="Hi, my name is George and this is my first social network project" likeCounts={44}/>
-                <Post message="Hi there, I learned how to push props" likeCounts={1}/>
+                {
+                    mappedPosts
+                }
             </div>
         </div>
     );
