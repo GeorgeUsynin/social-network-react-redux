@@ -12,7 +12,6 @@ type DialogItemPropsType = {
 const DialogItem: React.FC<DialogItemPropsType> = (props) => {
     return (
         <div className={classes.dialog}>
-
             <NavLink to={"/dialogs/" + props.id} className={classes.name}>
                 <img src={props.avatar} alt="#"/>
                 {props.name}

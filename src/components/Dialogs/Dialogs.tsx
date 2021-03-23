@@ -3,25 +3,34 @@ import classes from "./Dialogs.module.css"
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {DialogPageType} from "../../redux/state";
-import {Route} from "react-router-dom";
 
 type DialogsPropsType = {
     dialogsPageState: DialogPageType
+    addNewDialogMessage: (message: string) => void
 }
 
 const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
-    const mappedDialogs = props.dialogsPageState.dialogs.map(d=>{
-        return(
+    const mappedDialogs = props.dialogsPageState.dialogs.map(d => {
+        return (
             <DialogItem key={d.id} id={d.id} name={d.name} avatar={d.avatar}/>
         )
     })
 
-    const mappedMessages = props.dialogsPageState.messages.map(m=>{
-        return(
-            <Route path={"/dialogs/" + m.id} render={()=> <Message key={m.id} id={m.id} message={m.message}/>} />
+    const mappedMessages = props.dialogsPageState.messages.map(m => {
+        return (
+            <Message key={m.id} id={m.id} message={m.message}/>
         )
     })
+
+    const newDialogMessageRef = React.createRef<HTMLTextAreaElement>()
+
+    const addNewDialogMessage = () => {
+        if (newDialogMessageRef.current){
+            props.addNewDialogMessage(newDialogMessageRef.current.value)
+            newDialogMessageRef.current.value = ''
+        }
+    }
 
     return (
         <div className={classes.dialogs}>
@@ -30,7 +39,12 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
             </div>
             <div className={classes.messages}>
                 {mappedMessages}
+                <textarea ref={newDialogMessageRef}></textarea>
+                <div>
+                    <button onClick={addNewDialogMessage}>Send</button>
+                </div>
             </div>
+
         </div>
     )
 }

@@ -1,3 +1,5 @@
+import {renderTree} from "../RenderTree";
+
 type MessageType = {
     id: number
     message: string
@@ -14,8 +16,6 @@ export type FriendType = {
     name: string
     avatar: string
 }
-
-
 
 export type PostType = {
     id: number
@@ -47,15 +47,27 @@ let state: RootStateType = {
         posts: [
             {id: 1, message: "Hi, my name is George and this is my first social network project", likeCounts: 10000},
             {id: 2, message: "Hi there, I learned how to push props", likeCounts: 45},
-            {id: 2, message: "Hi there, I learned map", likeCounts: 666},
-            {id: 2, message: "Hi there, I learned filter", likeCounts: 67}
+            {id: 3, message: "Hi there, I learned map", likeCounts: 666},
+            {id: 4, message: "Hi there, I learned filter", likeCounts: 67}
         ]
     },
     dialogPage: {
         dialogs: [
-            {id: 1, name: "George", avatar: "https://www.flaticon.com/svg/vstatic/svg/924/924874.svg?token=exp=1615904286~hmac=52f815f6fe3c6bf5a19ac10aa4c238de"},
-            {id: 2, name: "Paul", avatar: "https://www.flaticon.com/svg/vstatic/svg/3048/3048116.svg?token=exp=1615907064~hmac=6ec93f4be25544272082851b36c07a3b"},
-            {id: 3, name: "Natasha", avatar: "https://www.flaticon.com/svg/vstatic/svg/3667/3667325.svg?token=exp=1615904286~hmac=08c705730519ebaf49514240765d5926"}
+            {
+                id: 1,
+                name: "George",
+                avatar: "https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png"
+            },
+            {
+                id: 2,
+                name: "Paul",
+                avatar: "https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png"
+            },
+            {
+                id: 3,
+                name: "Natasha",
+                avatar: "https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png"
+            }
         ],
         messages: [
             {id: 1, message: "Hi"},
@@ -65,11 +77,43 @@ let state: RootStateType = {
     },
     sidebar: {
         friends: [
-            {id: 1, name: "Elena", avatar: "https://www.flaticon.com/svg/vstatic/svg/3667/3667325.svg?token=exp=1615904286~hmac=08c705730519ebaf49514240765d5926"},
-            {id: 2, name: "Dima", avatar: "https://www.flaticon.com/svg/vstatic/svg/924/924874.svg?token=exp=1615904286~hmac=52f815f6fe3c6bf5a19ac10aa4c238de"},
-            {id: 3, name: "Olga", avatar: "https://www.flaticon.com/svg/vstatic/svg/2922/2922566.svg?token=exp=1615904286~hmac=cd18dc46ae83112ad686725255a47671"},
+            {
+                id: 1,
+                name: "Elena",
+                avatar: "https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png"
+            },
+            {
+                id: 2,
+                name: "Dima",
+                avatar: "https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png"
+            },
+            {
+                id: 3,
+                name: "Olga",
+                avatar: "https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png"
+            },
         ]
     }
 }
+
+export const addNewProfilePost = (message: string) => {
+    const newPost: PostType = {
+        id: Math.random() * 100,
+        message,
+        likeCounts: 0
+    }
+    state.profilePage.posts.push(newPost)
+    renderTree(state)
+}
+
+export const addNewDialogMessage = (message: string) => {
+    const newMessage: MessageType = {
+        id: Math.random() * 100,
+        message
+    }
+    state.dialogPage.messages.push(newMessage)
+    renderTree(state)
+}
+
 
 export default state;
