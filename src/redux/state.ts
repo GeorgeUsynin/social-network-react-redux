@@ -1,4 +1,11 @@
-import {renderTree} from "../RenderTree";
+let onChange = () => {
+    console.log('hello')
+}
+
+export const subscribe = (observer: () => void) => {
+    onChange = observer
+}
+
 
 type MessageType = {
     id: number
@@ -24,12 +31,14 @@ export type PostType = {
 }
 
 export type ProfilePageType = {
+    newPostMessage: string
     posts: Array<PostType>
 }
 
 export type DialogPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
+    newDialogMessage: string
 }
 
 export type SidebarType = {
@@ -49,7 +58,8 @@ let state: RootStateType = {
             {id: 2, message: "Hi there, I learned how to push props", likeCounts: 45},
             {id: 3, message: "Hi there, I learned map", likeCounts: 666},
             {id: 4, message: "Hi there, I learned filter", likeCounts: 67}
-        ]
+        ],
+        newPostMessage: ""
     },
     dialogPage: {
         dialogs: [
@@ -73,7 +83,8 @@ let state: RootStateType = {
             {id: 1, message: "Hi"},
             {id: 2, message: "How is your wellness?"},
             {id: 3, message: "Where do you go?"},
-        ]
+        ],
+        newDialogMessage: "sss"
     },
     sidebar: {
         friends: [
@@ -103,7 +114,12 @@ export const addNewProfilePost = (message: string) => {
         likeCounts: 0
     }
     state.profilePage.posts.push(newPost)
-    renderTree(state)
+    onChange()
+}
+
+export const changeNewTextProfilePost = (newText: string) => {
+    state.profilePage.newPostMessage = newText
+    onChange()
 }
 
 export const addNewDialogMessage = (message: string) => {
@@ -112,8 +128,12 @@ export const addNewDialogMessage = (message: string) => {
         message
     }
     state.dialogPage.messages.push(newMessage)
-    renderTree(state)
+    onChange()
 }
 
+export const changeNewTextDialogMessage = (newText: string) => {
+    state.dialogPage.newDialogMessage = newText
+    onChange()
+}
 
 export default state;
