@@ -1,3 +1,8 @@
+const ADD_NEW_PROFILE_POST = 'ADD-NEW-PROFILE-POST'
+const CHANGE_NEW_TEXT_PROFILE_POST = 'CHANGE-NEW-TEXT-PROFILE-POST'
+const ADD_NEW_DIALOG_MESSAGE = 'ADD-NEW-DIALOG-MESSAGE'
+const CHANGE_NEW_TEXT_DIALOG_MESSAGE = 'CHANGE-NEW-TEXT-DIALOG-MESSAGE'
+
 type MessageType = {
     id: number
     message: string
@@ -50,27 +55,39 @@ export type StoreType = {
     dispatch: (action: ActionsTypes) => void
 }
 
-type AddNewProfilePostActionType = {
-    type: 'ADD-NEW-PROFILE-POST'
-    message: string
+export type ActionsTypes =
+    ReturnType<typeof addNewProfilePostAC>
+    | ReturnType<typeof changeNewTextProfilePostAC>
+    | ReturnType<typeof addNewDialogMessageAC>
+    | ReturnType<typeof changeNewTextDialogMessageAC>
+
+export const addNewProfilePostAC = (newPostMessage: string) => {
+    return {
+        type: ADD_NEW_PROFILE_POST,
+        message: newPostMessage
+    } as const
 }
 
-type ChangeNewTextProfilePostActionType = {
-    type: 'CHANGE-NEW-TEXT-PROFILE-POST'
-    newText: string
+export const changeNewTextProfilePostAC = (newText: string) => {
+    return {
+        type: CHANGE_NEW_TEXT_PROFILE_POST,
+        newText: newText
+    } as const
 }
 
-type AddNewDialogMessageActionType = {
-    type: 'ADD-NEW-DIALOG-MESSAGE'
-    message: string
+export const addNewDialogMessageAC = (newDialogMessage: string) => {
+    return {
+        type: ADD_NEW_DIALOG_MESSAGE,
+        message: newDialogMessage
+    } as const
 }
 
-type ChangeNewTextDialogMessageActionType = {
-    type: 'CHANGE-NEW-TEXT-DIALOG-MESSAGE'
-    newText: string
+export const changeNewTextDialogMessageAC = (newText: string) => {
+    return {
+        type: CHANGE_NEW_TEXT_DIALOG_MESSAGE,
+        newText: newText
+    } as const
 }
-
-export type ActionsTypes = AddNewProfilePostActionType | ChangeNewTextProfilePostActionType | AddNewDialogMessageActionType | ChangeNewTextDialogMessageActionType
 
 export const store: StoreType = {
     _state: {
@@ -110,7 +127,7 @@ export const store: StoreType = {
                 {id: 2, message: "How is your wellness?"},
                 {id: 3, message: "Where do you go?"},
             ],
-            newDialogMessage: "sss"
+            newDialogMessage: ""
         },
         sidebar: {
             friends: [
@@ -135,14 +152,14 @@ export const store: StoreType = {
     _onChange() {
         console.log('hello')
     },
-    getState(){
-      return this._state
+    getState() {
+        return this._state
     },
     subscribe(callback) {
         this._onChange = callback
     },
-    dispatch(action){
-        if (action.type === 'ADD-NEW-PROFILE-POST'){
+    dispatch(action) {
+        if (action.type === ADD_NEW_PROFILE_POST) {
             const newPost: PostType = {
                 id: Math.random() * 100,
                 message: action.message,
@@ -150,20 +167,18 @@ export const store: StoreType = {
             }
             this._state.profilePage.posts.push(newPost)
             this._onChange()
-        }
-        else if (action.type === 'CHANGE-NEW-TEXT-PROFILE-POST'){
+        } else if (action.type === CHANGE_NEW_TEXT_PROFILE_POST) {
             this._state.profilePage.newPostMessage = action.newText
             this._onChange()
         }
-        else if (action.type === 'ADD-NEW-DIALOG-MESSAGE'){
+        else if (action.type === ADD_NEW_DIALOG_MESSAGE) {
             const newMessage: MessageType = {
                 id: Math.random() * 100,
                 message: action.message
             }
             this._state.dialogPage.messages.push(newMessage)
             this._onChange()
-        }
-        else if (action.type === 'CHANGE-NEW-TEXT-DIALOG-MESSAGE'){
+        } else if (action.type === CHANGE_NEW_TEXT_DIALOG_MESSAGE) {
             this._state.dialogPage.newDialogMessage = action.newText
             this._onChange()
         }

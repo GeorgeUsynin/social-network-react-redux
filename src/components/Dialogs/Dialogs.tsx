@@ -2,7 +2,7 @@ import React, {ChangeEvent} from "react";
 import classes from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {ActionsTypes, DialogPageType} from "../../redux/state";
+import {ActionsTypes, addNewDialogMessageAC, changeNewTextDialogMessageAC, DialogPageType} from "../../redux/state";
 
 type DialogsPropsType = {
     dialogsPageState: DialogPageType
@@ -24,11 +24,11 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
     })
 
     const addNewDialogMessage = () => {
-        props.dispatch({type: "ADD-NEW-DIALOG-MESSAGE", message: props.dialogsPageState.newDialogMessage})
+        props.dispatch(addNewDialogMessageAC(props.dialogsPageState.newDialogMessage))
     }
 
     const dialogMessageChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch({type: "CHANGE-NEW-TEXT-DIALOG-MESSAGE", newText: e.currentTarget.value})
+        props.dispatch(changeNewTextDialogMessageAC(e.currentTarget.value))
     }
 
     return (
@@ -39,7 +39,7 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
             <div className={classes.messages}>
                 {mappedMessages}
                 <textarea value={props.dialogsPageState.newDialogMessage}
-                          onChange={dialogMessageChangeHandler}></textarea>
+                          onChange={dialogMessageChangeHandler}>Hello</textarea>
                 <div>
                     <button onClick={addNewDialogMessage}>Send</button>
                 </div>
