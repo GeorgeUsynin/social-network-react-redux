@@ -44,14 +44,33 @@ export type RootStateType = {
 
 export type StoreType = {
     _state: RootStateType
-    getState: () => RootStateType
-    addNewProfilePost: (message: string) => void
-    changeNewTextProfilePost: (newText: string) => void
-    addNewDialogMessage: (message: string) => void
-    changeNewTextDialogMessage: (newText: string) => void
     _onChange: () => void
+    getState: () => RootStateType
     subscribe: (callback: () => void) => void
+    dispatch: (action: ActionsTypes) => void
 }
+
+type AddNewProfilePostActionType = {
+    type: 'ADD-NEW-PROFILE-POST'
+    message: string
+}
+
+type ChangeNewTextProfilePostActionType = {
+    type: 'CHANGE-NEW-TEXT-PROFILE-POST'
+    newText: string
+}
+
+type AddNewDialogMessageActionType = {
+    type: 'ADD-NEW-DIALOG-MESSAGE'
+    message: string
+}
+
+type ChangeNewTextDialogMessageActionType = {
+    type: 'CHANGE-NEW-TEXT-DIALOG-MESSAGE'
+    newText: string
+}
+
+export type ActionsTypes = AddNewProfilePostActionType | ChangeNewTextProfilePostActionType | AddNewDialogMessageActionType | ChangeNewTextDialogMessageActionType
 
 export const store: StoreType = {
     _state: {
@@ -113,39 +132,41 @@ export const store: StoreType = {
             ]
         }
     },
-    getState(){
-      return this._state
-    },
-    addNewProfilePost(message: string) {
-        const newPost: PostType = {
-            id: Math.random() * 100,
-            message,
-            likeCounts: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._onChange()
-    },
-    changeNewTextProfilePost(newText: string) {
-        this._state.profilePage.newPostMessage = newText
-        this._onChange()
-    },
-    addNewDialogMessage(message: string) {
-        const newMessage: MessageType = {
-            id: Math.random() * 100,
-            message
-        }
-        this._state.dialogPage.messages.push(newMessage)
-        this._onChange()
-    },
-    changeNewTextDialogMessage(newText: string) {
-        this._state.dialogPage.newDialogMessage = newText
-        this._onChange()
-    },
     _onChange() {
         console.log('hello')
     },
+    getState(){
+      return this._state
+    },
     subscribe(callback) {
         this._onChange = callback
+    },
+    dispatch(action){
+        if (action.type === 'ADD-NEW-PROFILE-POST'){
+            const newPost: PostType = {
+                id: Math.random() * 100,
+                message: action.message,
+                likeCounts: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._onChange()
+        }
+        else if (action.type === 'CHANGE-NEW-TEXT-PROFILE-POST'){
+            this._state.profilePage.newPostMessage = action.newText
+            this._onChange()
+        }
+        else if (action.type === 'ADD-NEW-DIALOG-MESSAGE'){
+            const newMessage: MessageType = {
+                id: Math.random() * 100,
+                message: action.message
+            }
+            this._state.dialogPage.messages.push(newMessage)
+            this._onChange()
+        }
+        else if (action.type === 'CHANGE-NEW-TEXT-DIALOG-MESSAGE'){
+            this._state.dialogPage.newDialogMessage = action.newText
+            this._onChange()
+        }
     }
 }
 

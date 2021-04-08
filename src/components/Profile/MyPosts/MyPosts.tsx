@@ -1,13 +1,12 @@
 import React, {ChangeEvent} from 'react';
 import classes from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import {PostType} from "../../../redux/state";
+import {ActionsTypes, PostType} from "../../../redux/state";
 
 type MyPostsPropsType = {
     posts: Array<PostType>
-    addNewProfilePost: (message: string) => void
-    changeNewTextProfilePost: (message: string) => void
     newPostMessage: string
+    dispatch: (action: ActionsTypes) => void
 }
 
 const MyPosts: React.FC<MyPostsPropsType> = (props) => {
@@ -16,32 +15,32 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
     const addPost = () => {
 
-        props.addNewProfilePost(props.newPostMessage)
+        props.dispatch({type: "ADD-NEW-PROFILE-POST", message: props.newPostMessage})
     }
 
     const postMessageChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.changeNewTextProfilePost(e.currentTarget.value)
+        props.dispatch({type: "CHANGE-NEW-TEXT-PROFILE-POST", newText: e.currentTarget.value})
     }
 
-        return (
-            <div className={classes.post_wrapper}>
+    return (
+        <div className={classes.post_wrapper}>
+            <div>
+                My posts
+            </div>
+            <div>
                 <div>
-                    My posts
+                    <textarea value={props.newPostMessage} onChange={postMessageChangeHandler}></textarea>
                 </div>
                 <div>
-                    <div>
-                        <textarea value={props.newPostMessage} onChange={postMessageChangeHandler}></textarea>
-                    </div>
-                    <div>
-                        <button onClick={addPost}>Add</button>
-                    </div>
-                </div>
-                <div className={classes.posts}>
-                    {
-                        mappedPosts
-                    }
+                    <button onClick={addPost}>Add</button>
                 </div>
             </div>
-        );
+            <div className={classes.posts}>
+                {
+                    mappedPosts
+                }
+            </div>
+        </div>
+    );
 }
 export default MyPosts;
