@@ -1,9 +1,9 @@
-const ADD_NEW_PROFILE_POST = 'ADD-NEW-PROFILE-POST'
-const CHANGE_NEW_TEXT_PROFILE_POST = 'CHANGE-NEW-TEXT-PROFILE-POST'
-const ADD_NEW_DIALOG_MESSAGE = 'ADD-NEW-DIALOG-MESSAGE'
-const CHANGE_NEW_TEXT_DIALOG_MESSAGE = 'CHANGE-NEW-TEXT-DIALOG-MESSAGE'
+import profileReducer, {addNewProfilePostAC, changeNewTextProfilePostAC} from "./profile-reducer";
+import dialogsReducer, {addNewDialogMessageAC, changeNewTextDialogMessageAC} from "./dialog-reducer";
+import sidebarReducer from "./sidebar-reducer";
 
-type MessageType = {
+
+export type MessageType = {
     id: number
     message: string
 }
@@ -61,33 +61,8 @@ export type ActionsTypes =
     | ReturnType<typeof addNewDialogMessageAC>
     | ReturnType<typeof changeNewTextDialogMessageAC>
 
-export const addNewProfilePostAC = (newPostMessage: string) => {
-    return {
-        type: ADD_NEW_PROFILE_POST,
-        message: newPostMessage
-    } as const
-}
 
-export const changeNewTextProfilePostAC = (newText: string) => {
-    return {
-        type: CHANGE_NEW_TEXT_PROFILE_POST,
-        newText: newText
-    } as const
-}
 
-export const addNewDialogMessageAC = (newDialogMessage: string) => {
-    return {
-        type: ADD_NEW_DIALOG_MESSAGE,
-        message: newDialogMessage
-    } as const
-}
-
-export const changeNewTextDialogMessageAC = (newText: string) => {
-    return {
-        type: CHANGE_NEW_TEXT_DIALOG_MESSAGE,
-        newText: newText
-    } as const
-}
 
 export const store: StoreType = {
     _state: {
@@ -159,29 +134,10 @@ export const store: StoreType = {
         this._onChange = callback
     },
     dispatch(action) {
-        if (action.type === ADD_NEW_PROFILE_POST) {
-            const newPost: PostType = {
-                id: Math.random() * 100,
-                message: action.message,
-                likeCounts: 0
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._onChange()
-        } else if (action.type === CHANGE_NEW_TEXT_PROFILE_POST) {
-            this._state.profilePage.newPostMessage = action.newText
-            this._onChange()
-        }
-        else if (action.type === ADD_NEW_DIALOG_MESSAGE) {
-            const newMessage: MessageType = {
-                id: Math.random() * 100,
-                message: action.message
-            }
-            this._state.dialogPage.messages.push(newMessage)
-            this._onChange()
-        } else if (action.type === CHANGE_NEW_TEXT_DIALOG_MESSAGE) {
-            this._state.dialogPage.newDialogMessage = action.newText
-            this._onChange()
-        }
+        profileReducer(this._state.profilePage, action)
+        dialogsReducer(this._state.dialogPage, action)
+        sidebarReducer(this._state.sidebar, action)
+        this._onChange()
     }
 }
 
