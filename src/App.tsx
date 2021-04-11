@@ -3,7 +3,7 @@ import './App.css';
 import Header from "./components/Header/Header";
 import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
-import {Route} from "react-router-dom"
+import {Redirect, Route} from "react-router-dom"
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -25,6 +25,7 @@ const App: React.FC<AppPropsType> = (props) => {
             <Header/>
             <Sidebar sideBarState={state.sidebar}/>
             <div className="app-wrapper-content">
+                <Route path={'/'} exact render={() => <Redirect to={'/profile'}/>}/>
                 <Route path="/profile" render={() => <Profile profilePageState={state.profilePage}
                                                               dispatch={props.store.dispatch.bind(props.store)}/>}/>
                 <Route path="/dialogs" render={() => <Dialogs dialogsPageState={state.dialogPage}
