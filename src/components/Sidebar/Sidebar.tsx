@@ -2,7 +2,7 @@ import React from "react";
 import cls from "./Sidebar.module.css"
 import Navbar from "./Navbar/Navbar";
 import FriendsBar from "./FriendsBar/FriendsBar";
-import {SidebarType} from "../../redux/state";
+import {SidebarType} from "../../redux/store";
 
 type SidebarPropsType = {
     sideBarState: SidebarType

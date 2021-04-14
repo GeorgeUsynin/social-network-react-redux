@@ -1,25 +1,26 @@
 import React, {ChangeEvent} from 'react';
 import classes from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import {addNewProfilePostAC, changeNewTextProfilePostAC} from "../../../redux/profile-reducer";
-import {ActionsTypes, PostType} from "../../../redux/state";
+import {PostType} from "../../../redux/store";
 
 type MyPostsPropsType = {
     posts: Array<PostType>
     newPostMessage: string
-    dispatch: (action: ActionsTypes) => void
+    addPost: ()=>void
+    onChangePostMessage: (message: string) => void
+
 }
 
 const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
     const mappedPosts = props.posts.map(p => <Post key={p.id} id={p.id} message={p.message} likeCounts={p.likeCounts}/>)
 
-    const addPost = () => {
-        props.dispatch(addNewProfilePostAC(props.newPostMessage))
+    const addPostHandler = () => {
+        props.addPost()
     }
 
     const postMessageChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(changeNewTextProfilePostAC(e.currentTarget.value))
+        props.onChangePostMessage(e.currentTarget.value)
     }
 
     return (
@@ -32,7 +33,7 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
                     <textarea value={props.newPostMessage} onChange={postMessageChangeHandler}></textarea>
                 </div>
                 <div>
-                    <button onClick={addPost}>Add</button>
+                    <button onClick={addPostHandler}>Add</button>
                 </div>
             </div>
             <div className={classes.posts}>

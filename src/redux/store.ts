@@ -8,7 +8,7 @@ export type MessageType = {
     message: string
 }
 
-type DialogType = {
+export type DialogType = {
     id: number
     name: string
     avatar: string
@@ -134,9 +134,9 @@ export const store: StoreType = {
         this._onChange = callback
     },
     dispatch(action) {
-        profileReducer(this._state.profilePage, action)
-        dialogsReducer(this._state.dialogPage, action)
-        sidebarReducer(this._state.sidebar, action)
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogPage = dialogsReducer(this._state.dialogPage, action)
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
         this._onChange()
     }
 }

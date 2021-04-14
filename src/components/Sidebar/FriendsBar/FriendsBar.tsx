@@ -1,7 +1,7 @@
 import React from "react";
 import cls from "./FriendsBar.module.css"
 import FriendInfo from "./FriendInfo/FriendInfo";
-import {FriendType} from "../../../redux/state";
+import {FriendType} from "../../../redux/store";
 
 type FriendsBarType = {
     friends: Array<FriendType>
