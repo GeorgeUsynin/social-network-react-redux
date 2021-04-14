@@ -9,10 +9,10 @@ type DialogsPropsType = {
 
 const DialogsContainer: React.FC<DialogsPropsType> = (props) => {
 
-    const state = props.store.getState()
+    const dialogPageState = props.store.getState().dialogPage
 
     const addNewDialogMessage = () => {
-        props.store.dispatch(addNewDialogMessageAC(state.dialogPage.newDialogMessage))
+        props.store.dispatch(addNewDialogMessageAC(dialogPageState.newDialogMessage))
     }
 
     const dialogMessageChange = (message: string) => {
@@ -22,9 +22,9 @@ const DialogsContainer: React.FC<DialogsPropsType> = (props) => {
     return (
         <Dialogs addNewDialogMessage={addNewDialogMessage}
                  dialogMessageChange={dialogMessageChange}
-                 messages={state.dialogPage.messages}
-                 dialogs={state.dialogPage.dialogs}
-                 newDialogMessage={state.dialogPage.newDialogMessage}
+                 dialogPage={dialogPageState}
+
+
         />
     )
 }
