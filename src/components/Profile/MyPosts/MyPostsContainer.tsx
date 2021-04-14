@@ -9,10 +9,10 @@ type MyPostsContainerPropsType = {
 
 const MyPostsContainer: React.FC<MyPostsContainerPropsType> = (props) => {
 
-    const state = props.store.getState()
+    const profilePageState = props.store.getState().profilePage
 
     const addPost = () => {
-        props.store.dispatch(addNewProfilePostAC(state.profilePage.newPostMessage))
+        props.store.dispatch(addNewProfilePostAC(profilePageState.newPostMessage))
     }
 
     const postMessageChange = (message: string) => {
@@ -20,8 +20,8 @@ const MyPostsContainer: React.FC<MyPostsContainerPropsType> = (props) => {
     }
 
     return (
-        <MyPosts posts={state.profilePage.posts}
-                 newPostMessage={state.profilePage.newPostMessage}
+        <MyPosts posts={profilePageState.posts}
+                 newPostMessage={profilePageState.newPostMessage}
                  addPost={addPost}
                  onChangePostMessage={postMessageChange}/>
     );
