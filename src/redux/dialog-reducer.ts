@@ -1,13 +1,30 @@
-import {ActionsTypes, DialogPageType, MessageType} from "./store";
-
 const ADD_NEW_DIALOG_MESSAGE = 'ADD-NEW-DIALOG-MESSAGE'
 const CHANGE_NEW_TEXT_DIALOG_MESSAGE = 'CHANGE-NEW-TEXT-DIALOG-MESSAGE'
 
+//types
+type DialogType = {
+    id: number
+    name: string
+    avatar: string
+}
+
+type MessageType = {
+    id: number
+    message: string
+}
+
+export type DialogPageType = {
+    dialogs: Array<DialogType>
+    messages: Array<MessageType>
+    newDialogMessage: string
+}
+
+export type DialogPageACsType = ReturnType<typeof addNewDialogMessageAC> | ReturnType<typeof changeNewTextDialogMessageAC>
+
 //actionCreators
-export const addNewDialogMessageAC = (newDialogMessage: string) => {
+export const addNewDialogMessageAC = () => {
     return {
-        type: ADD_NEW_DIALOG_MESSAGE,
-        message: newDialogMessage
+        type: ADD_NEW_DIALOG_MESSAGE
     } as const
 }
 export const changeNewTextDialogMessageAC = (newText: string) => {
@@ -44,13 +61,13 @@ const initialState: DialogPageType = {
 }
 
 //reducer
-const dialogsReducer = (state = initialState, action: ActionsTypes): DialogPageType => {
+const dialogsReducer = (state: DialogPageType = initialState, action: DialogPageACsType): DialogPageType => {
 
     switch (action.type) {
         case ADD_NEW_DIALOG_MESSAGE:
             const newMessage: MessageType = {
                 id: Math.random() * 100,
-                message: action.message
+                message: state.newDialogMessage
             }
             state.messages.push(newMessage)
             state.newDialogMessage = ''

@@ -1,32 +1,40 @@
-import React from "react";
-import {addNewDialogMessageAC, changeNewTextDialogMessageAC} from "../../redux/dialog-reducer";
+import {addNewDialogMessageAC, changeNewTextDialogMessageAC, DialogPageType} from "../../redux/dialog-reducer";
 import Dialogs from "./Dialogs";
-import StoreContext from "../../StoreContext";
+import {connect} from "react-redux";
+import {AppStateType} from "../../redux/redux-store";
+import {Dispatch} from "redux";
 
-type DialogsPropsType = {}
-
-const DialogsContainer: React.FC<DialogsPropsType> = (props) => {
-
-    return (
-        <StoreContext.Consumer>
-            {
-                (store) => {
-                    const dialogPageState = store.getState().dialogPage
-
-                    const addNewDialogMessage = () => {
-                        store.dispatch(addNewDialogMessageAC(dialogPageState.newDialogMessage))
-                    }
-
-                    const dialogMessageChange = (message: string) => {
-                        store.dispatch(changeNewTextDialogMessageAC(message))
-                    }
-                    return <Dialogs addNewDialogMessage={addNewDialogMessage}
-                                    dialogMessageChange={dialogMessageChange}
-                                    dialogPage={dialogPageState}/>
-                }
-            }
-        </StoreContext.Consumer>
-    )
+//types
+type MapStatePropsType = {
+    dialogPage: DialogPageType
 }
+
+type MapDispatchPropsType = {
+    addNewDialogMessage: () => void
+    dialogMessageChange: (message: string) => void
+}
+
+export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
+
+//functions for 'connect'
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+    return {
+        dialogPage: state.dialogPage
+    }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+    return {
+        addNewDialogMessage: () => {
+            dispatch(addNewDialogMessageAC())
+        },
+        dialogMessageChange: (message: string) => {
+            dispatch(changeNewTextDialogMessageAC(message))
+        }
+    }
+}
+
+//container component
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
 
 export default DialogsContainer

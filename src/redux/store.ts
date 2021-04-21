@@ -1,5 +1,9 @@
-import profileReducer, {addNewProfilePostAC, changeNewTextProfilePostAC} from "./profile-reducer";
-import dialogsReducer, {addNewDialogMessageAC, changeNewTextDialogMessageAC} from "./dialog-reducer";
+import profileReducer, {
+    addNewProfilePostAC,
+    changeNewTextProfilePostAC,
+    ProfileReducerACsType
+} from "./profile-reducer";
+import dialogsReducer, {addNewDialogMessageAC, changeNewTextDialogMessageAC, DialogPageACsType} from "./dialog-reducer";
 import sidebarReducer from "./sidebar-reducer";
 
 
@@ -52,19 +56,10 @@ export type StoreType = {
     _onChange: () => void
     getState: () => RootStateType
     subscribe: (callback: () => void) => void
-    dispatch: (action: ActionsTypes) => void
+    dispatch: (action: DialogPageACsType & ProfileReducerACsType) => void
 }
 
-export type ActionsTypes =
-    ReturnType<typeof addNewProfilePostAC>
-    | ReturnType<typeof changeNewTextProfilePostAC>
-    | ReturnType<typeof addNewDialogMessageAC>
-    | ReturnType<typeof changeNewTextDialogMessageAC>
-
-
-
-
-export const store: StoreType = {
+const store: StoreType = {
     _state: {
         profilePage: {
             posts: [

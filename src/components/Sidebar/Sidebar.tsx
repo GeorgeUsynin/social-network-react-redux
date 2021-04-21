@@ -3,18 +3,14 @@ import cls from "./Sidebar.module.css"
 import Navbar from "./Navbar/Navbar";
 import FriendsBarContainer from "./FriendsBar/FriendsBarContainer";
 
-type SidebarPropsType = {
 
-}
-
-
-const Sidebar: React.FC<SidebarPropsType> = (props) => {
-    return(
+const Sidebar = () => {
+    return (
         <div className={cls.sidebar}>
             <Navbar/>
-            <FriendsBarContainer />
+            <FriendsBarContainer/>
         </div>
     )
 }
-export default  Sidebar;
+export default Sidebar;
 

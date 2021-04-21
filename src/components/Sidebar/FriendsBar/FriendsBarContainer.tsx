@@ -1,22 +1,29 @@
-import React from "react";
-import StoreContext from "../../../StoreContext";
 import FriendsBar from "./FriendsBar";
+import {connect} from "react-redux";
+import {SidebarType} from "../../../redux/sidebar-reducer";
+import {AppStateType} from "../../../redux/redux-store";
+import {Dispatch} from "redux";
 
-type FriendsBarType = {
+//types
+type MapStatePropsType = {
+    sidebar: SidebarType
+}
+type MapDispatchPropsType = {
 
 }
 
-const FriendsBarContainer: React.FC<FriendsBarType> = (props) => {
+export type FriendsBarType = MapStatePropsType & MapDispatchPropsType
 
-    return (
-        <StoreContext.Consumer>
-            {
-                (store) => {
-                    return <FriendsBar friends={store.getState().sidebar.friends}/>
-                }
-            }
-        </StoreContext.Consumer>
-    )
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+    return {
+        sidebar: state.sidebar
+    }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+    return {}
+}
+
+const FriendsBarContainer = connect(mapStateToProps, mapDispatchToProps)(FriendsBar)
 
 export default FriendsBarContainer;

@@ -1,34 +1,40 @@
-import React from 'react';
-import {addNewProfilePostAC, changeNewTextProfilePostAC} from "../../../redux/profile-reducer";
+import {addNewProfilePostAC, changeNewTextProfilePostAC, ProfilePageType} from "../../../redux/profile-reducer";
 import MyPosts from "./MyPosts";
-import StoreContext from '../../../StoreContext';
+import {connect} from "react-redux";
+import {AppStateType} from "../../../redux/redux-store";
+import {Dispatch} from "redux";
 
-type MyPostsContainerPropsType = {}
-
-const MyPostsContainer: React.FC<MyPostsContainerPropsType> = (props) => {
-
-    return (
-        <StoreContext.Consumer>
-            {
-                (store) => {
-                    const profilePageState = store.getState().profilePage
-
-                    const addPost = () => {
-                        store.dispatch(addNewProfilePostAC(profilePageState.newPostMessage))
-                    }
-
-                    const postMessageChange = (message: string) => {
-                        store.dispatch(changeNewTextProfilePostAC(message))
-                    }
-
-                    return <MyPosts posts={profilePageState.posts}
-                                    newPostMessage={profilePageState.newPostMessage}
-                                    addPost={addPost}
-                                    onChangePostMessage={postMessageChange}/>
-
-                }
-            }
-        </StoreContext.Consumer>
-    );
+//types
+type MapStatePropsType = {
+    profilePageState: ProfilePageType
 }
-export default MyPostsContainer;
+
+type MapDispatchPropsType = {
+    addPost: () => void
+    onChangePostMessage: (message: string) => void
+}
+
+export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType
+
+//functions for 'connect'
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
+    return {
+        profilePageState: state.profilePage
+    }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+    return {
+        addPost: () => {
+            dispatch(addNewProfilePostAC())
+        },
+        onChangePostMessage: (message: string) => {
+            dispatch(changeNewTextProfilePostAC(message))
+        }
+    }
+}
+
+//container component
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+
+export default MyPostsContainer

@@ -3,15 +3,12 @@ import classes from "./Profile.module.css";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 
-type ProfilePropsType = {
 
-}
-
-const Profile: React.FC<ProfilePropsType> = (props) => {
+const Profile = () => {
     return (
         <div className={classes.profile}>
             <ProfileInfo/>
-            <MyPostsContainer />
+            <MyPostsContainer/>
         </div>
     );
 }

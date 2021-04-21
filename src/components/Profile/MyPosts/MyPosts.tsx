@@ -1,19 +1,12 @@
 import React, {ChangeEvent} from 'react';
 import classes from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import {PostType} from "../../../redux/store";
-
-type MyPostsPropsType = {
-    posts: Array<PostType>
-    newPostMessage: string
-    addPost: ()=>void
-    onChangePostMessage: (message: string) => void
-
-}
+import {MyPostsPropsType} from "./MyPostsContainer";
 
 const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
-    const mappedPosts = props.posts.map(p => <Post key={p.id} id={p.id} message={p.message} likeCounts={p.likeCounts}/>)
+
+    const mappedPosts = props.profilePageState.posts.map(p => <Post key={p.id} id={p.id} message={p.message} likeCounts={p.likeCounts}/>)
 
     const addPostHandler = () => {
         props.addPost()
@@ -30,7 +23,7 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
             </div>
             <div>
                 <div>
-                    <textarea value={props.newPostMessage} onChange={postMessageChangeHandler}></textarea>
+                    <textarea value={props.profilePageState.newPostMessage} onChange={postMessageChangeHandler}></textarea>
                 </div>
                 <div>
                     <button onClick={addPostHandler}>Add</button>

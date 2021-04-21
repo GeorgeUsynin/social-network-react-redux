@@ -1,13 +1,25 @@
-import {ActionsTypes, PostType, ProfilePageType} from "./store";
-
 const ADD_NEW_PROFILE_POST = 'ADD-NEW-PROFILE-POST'
 const CHANGE_NEW_TEXT_PROFILE_POST = 'CHANGE-NEW-TEXT-PROFILE-POST'
 
+
+//types
+type PostType = {
+    id: number
+    message: string
+    likeCounts: number
+}
+
+export type ProfilePageType = {
+    newPostMessage: string
+    posts: Array<PostType>
+}
+
+export type ProfileReducerACsType = ReturnType<typeof addNewProfilePostAC> | ReturnType<typeof changeNewTextProfilePostAC>
+
 //actionCreators
-export const addNewProfilePostAC = (newPostMessage: string) => {
+export const addNewProfilePostAC = () => {
     return {
-        type: ADD_NEW_PROFILE_POST,
-        message: newPostMessage
+        type: ADD_NEW_PROFILE_POST
     } as const
 }
 export const changeNewTextProfilePostAC = (newText: string) => {
@@ -32,13 +44,13 @@ const initialState: ProfilePageType = {
 }
 
 //reducer
-const profileReducer = (state = initialState, action: ActionsTypes): ProfilePageType => {
+const profileReducer = (state: ProfilePageType = initialState, action: ProfileReducerACsType): ProfilePageType => {
 
     switch (action.type) {
         case ADD_NEW_PROFILE_POST:
             const newPost: PostType = {
                 id: Math.random() * 100,
-                message: action.message,
+                message: state.newPostMessage,
                 likeCounts: 0
             }
             state.posts.push(newPost)

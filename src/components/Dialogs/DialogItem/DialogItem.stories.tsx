@@ -5,7 +5,6 @@ import {DialogItem, DialogItemPropsType} from "./DialogItem";
 import {BrowserRouter} from "react-router-dom";
 
 
-
 export default {
     title: 'Dialogs/DialogItem',
     component: DialogItem,
