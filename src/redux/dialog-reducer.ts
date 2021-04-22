@@ -19,7 +19,9 @@ export type DialogPageType = {
     newDialogMessage: string
 }
 
-export type DialogPageACsType = ReturnType<typeof addNewDialogMessageAC> | ReturnType<typeof changeNewTextDialogMessageAC>
+export type DialogPageACsType =
+    ReturnType<typeof addNewDialogMessageAC>
+    | ReturnType<typeof changeNewTextDialogMessageAC>
 
 //actionCreators
 export const addNewDialogMessageAC = () => {
@@ -62,19 +64,20 @@ const initialState: DialogPageType = {
 
 //reducer
 const dialogsReducer = (state: DialogPageType = initialState, action: DialogPageACsType): DialogPageType => {
-
     switch (action.type) {
         case ADD_NEW_DIALOG_MESSAGE:
             const newMessage: MessageType = {
                 id: Math.random() * 100,
                 message: state.newDialogMessage
             }
-            state.messages.push(newMessage)
-            state.newDialogMessage = ''
-            return state
+            return {
+                ...state,
+                messages: [...state.messages, newMessage],
+                newDialogMessage: ''
+            }
         case CHANGE_NEW_TEXT_DIALOG_MESSAGE:
             state.newDialogMessage = action.newText
-            return state
+            return {...state}
         default:
             return state
     }
