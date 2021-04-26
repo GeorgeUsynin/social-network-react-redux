@@ -29,6 +29,7 @@ export const addNewDialogMessageAC = () => {
         type: ADD_NEW_DIALOG_MESSAGE
     } as const
 }
+
 export const changeNewTextDialogMessageAC = (newText: string) => {
     return {
         type: CHANGE_NEW_TEXT_DIALOG_MESSAGE,

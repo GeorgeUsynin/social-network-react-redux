@@ -28,6 +28,7 @@ export const changeNewTextProfilePostAC = (newText: string) => {
         newText: newText
     } as const
 }
+
 //initialState
 const initialState: ProfilePageType = {
     posts: [
@@ -44,7 +45,7 @@ const initialState: ProfilePageType = {
 }
 
 //reducer
-const profileReducer = (state: ProfilePageType = initialState, action: ProfileReducerACsType): ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ProfileReducerACsType): ProfilePageType => {
 
     switch (action.type) {
         case ADD_NEW_PROFILE_POST:
