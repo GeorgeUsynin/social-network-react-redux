@@ -28,7 +28,6 @@ export const changeNewTextProfilePostAC = (newText: string) => {
         newText: newText
     } as const
 }
-
 //initialState
 const initialState: ProfilePageType = {
     posts: [
