@@ -7,9 +7,9 @@ beforeEach(()=>{
         users: [
             {
                 id: 1,
-                avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                photos: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
                 followed: false,
-                fullName: "George",
+                name: "George",
                 status: "I'm a boss",
                 location: {
                     city: 'Minsk',
@@ -18,9 +18,9 @@ beforeEach(()=>{
             },
             {
                 id: 2,
-                avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                photos: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
                 followed: true,
-                fullName: "Alexander",
+                name: "Alexander",
                 status: "I'm happy",
                 location: {
                     city: 'Paris',
@@ -29,9 +29,9 @@ beforeEach(()=>{
             },
             {
                 id: 3,
-                avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                photos: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
                 followed: false,
-                fullName: "Natasha",
+                name: "Natasha",
                 status: "I'm a boss too",
                 location: {
                     city: 'Berlin',
@@ -57,9 +57,9 @@ test('users should be set', ()=>{
     const newUsers =  [
             {
                 id: 4,
-                avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                photos: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
                 followed: false,
-                fullName: "Alex",
+                name: "Alex",
                 status: "I'm a boss",
                 location: {
                     city: 'Minsk',
@@ -68,9 +68,9 @@ test('users should be set', ()=>{
             },
             {
                 id: 5,
-                avatar: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                photos: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
                 followed: false,
-                fullName: "Bob",
+                name: "Bob",
                 status: "I'm happy",
                 location: {
                     city: 'Paris',
@@ -81,8 +81,8 @@ test('users should be set', ()=>{
 
     const newState: UsersPageType = usersReducer(initialState, setUsersAC(newUsers))
 
-    expect(newState.users[3].fullName).toBe('Alex')
-    expect(newState.users[4].fullName).toBe('Bob')
+    expect(newState.users[3].name).toBe('Alex')
+    expect(newState.users[4].name).toBe('Bob')
     expect(newState.users.length).toBe(5)
     expect(newState.users[0].id).toBe(1)
 
