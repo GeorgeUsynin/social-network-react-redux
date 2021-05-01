@@ -1,4 +1,4 @@
-import usersReducer, {followAC, setUsersAC, unFollowAC, UsersPageType, UserType} from "./users-reducer";
+import usersReducer, {followAC, setUsersAC, unFollowAC, UsersPageType} from "./users-reducer";
 
 let initialState: UsersPageType
 
@@ -7,7 +7,10 @@ beforeEach(()=>{
         users: [
             {
                 id: 1,
-                photos: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                photos: {
+                    small: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                    large: ''
+                },
                 followed: false,
                 name: "George",
                 status: "I'm a boss",
@@ -18,7 +21,10 @@ beforeEach(()=>{
             },
             {
                 id: 2,
-                photos: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                photos: {
+                    small: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                    large: ''
+                },
                 followed: true,
                 name: "Alexander",
                 status: "I'm happy",
@@ -29,7 +35,10 @@ beforeEach(()=>{
             },
             {
                 id: 3,
-                photos: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                photos: {
+                    small: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                    large: ''
+                },
                 followed: false,
                 name: "Natasha",
                 status: "I'm a boss too",
@@ -57,7 +66,10 @@ test('users should be set', ()=>{
     const newUsers =  [
             {
                 id: 4,
-                photos: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                photos: {
+                    small: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                    large: ''
+                },
                 followed: false,
                 name: "Alex",
                 status: "I'm a boss",
@@ -68,7 +80,10 @@ test('users should be set', ()=>{
             },
             {
                 id: 5,
-                photos: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                photos: {
+                    small: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png',
+                    large: ''
+                },
                 followed: false,
                 name: "Bob",
                 status: "I'm happy",
