@@ -1,49 +1,85 @@
 import React from "react";
+import cls from "./Users.module.css";
+import axios from "axios";
 import {UsersPropsType} from "./UsersContainer";
-import cls from './Users.module.css'
-import axios from 'axios'
+import {v1} from 'uuid';
 
-const UsersMemo: React.FC<UsersPropsType> = (props) => {
+class Users extends React.Component<UsersPropsType> {
+    // axiosInstance - сконфигурированный axios, withCredentials: true - автоматически отправляет куки в запросах
+    axiosInstance = axios.create({
+        baseURL: 'https://social-network.samuraijs.com/api/1.0',
+        // baseURL:'https://social-network.samuraijs.com/api/2.0.1',
+        withCredentials: true
+    })
+    componentDidMount() {
 
-    const getUsers = () =>{
-        if (props.usersPage.users.length === 0) {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users')
-                .then(response => {
-                    props.setUsers(response.data.items)
-                })
-        }
+
+        this.axiosInstance
+            .get(`/users?page=${this.props.usersPage.currentPage}&count=${this.props.usersPage.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+                // this.props.setTotalUsersCount(response.data.totalCount)
+            })
     }
 
+    onPageChanged = (page: number) =>{
+        this.props.changePage(page)
+        this.axiosInstance
+            .get(`/users?page=${page}&count=${this.props.usersPage.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+            })
+    }
 
-    const mappedUsers = props.usersPage.users.map(u => {
+    render() {
+
+        let pagesCount = Math.ceil((this.props.usersPage.totalUsersAmount / this.props.usersPage.pageSize))
+
+        let pages = []
+
+        for(let i=1; i<=pagesCount; i++){
+            pages.push(i)
+        }
+
         return (
-            <div key={u.id} className={cls.wrapper_user}>
-                <div className={cls.avatar_button}>
-                    <div className={cls.avatar}><img
-                        src={u.photos.small !== null ? u.photos.small : 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png'}/>
-                    </div>
-                    <div className={cls.button_wrapper}>
-                        <button
-                            onClick={u.followed ? () => props.unFollowUser(u.id) : () => props.followUser(u.id)}>{u.followed ? 'Follow' : 'Unfollow'}</button>
-                    </div>
-                </div>
-                <div className={cls.description}>
-                    <div>{u.name}</div>
-                    {/*<div>{u.location.city}, {u.location.country}</div>*/}
-                    <div>{u.status}</div>
-                </div>
+            <div>
+                <span className={cls.spanPagesName}>Pages: </span>
+                {
+                    pages.map(p=>{
+                        return (
+                            <span
+                                key={v1()}
+                                className={p === this.props.usersPage.currentPage ? `${cls.selectedPage} ${cls.spanPageNumber}`: cls.spanPageNumber}
+                                onClick={()=>this.onPageChanged(p)}
+                            >{p}</span>
+                        )
+                    })
+                }
+                {
+                    this.props.usersPage.users.map(u => {
+                        return (
+                                <div key={u.id} className={cls.wrapper_user}>
+                                    <div className={cls.avatar_button}>
+                                        <div className={cls.avatar}><img
+                                            src={u.photos.small !== null ? u.photos.small : 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png'}/>
+                                        </div>
+                                        <div className={cls.button_wrapper}>
+                                            <button
+                                                onClick={u.followed ? () => this.props.unFollowUser(u.id) : () => this.props.followUser(u.id)}>{u.followed ? 'Follow' : 'Unfollow'}</button>
+                                        </div>
+                                    </div>
+                                    <div className={cls.description}>
+                                        <div>{u.name}</div>
+                                        {/*<div>{u.location.city}, {u.location.country}</div>*/}
+                                        <div>{u.status}</div>
+                                    </div>
+                                </div>
+                        );
+                    })
+                }
             </div>
         )
-    })
-
-    return (
-        <div>
-            <button onClick={getUsers}>Get users</button>
-            {mappedUsers}
-        </div>
-    )
+    }
 }
-
-const Users = React.memo(UsersMemo)
 
 export default Users

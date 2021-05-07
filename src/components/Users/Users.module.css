@@ -37,3 +37,25 @@
 .description div {
     padding: 10px;
 }
+
+.spanPageNumber{
+    color: black;
+    font-size: 20px;
+    margin: 0 5px;
+}
+
+.selectedPage{
+    font-weight: bold;
+    color: #1ea7fd;
+    font-size: 20px;
+}
+
+.spanPagesName{
+    font-size: 20px;
+}
+
+.spanPageNumber:hover{
+    cursor: pointer;
+    font-weight: bold;
+    color: #1ea7fd;
+}

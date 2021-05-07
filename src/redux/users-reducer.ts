@@ -1,6 +1,8 @@
 const FOLLOW_USER = 'FOLLOW_USER'
 const UNFOLLOW_USER = 'UNFOLLOW_USER'
 const SET_USERS = 'SET_USERS'
+const CHANGE_PAGE = 'CHANGE_PAGE'
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 
 
 //types
@@ -25,12 +27,17 @@ export type UserType = {
 
 export type UsersPageType = {
     users: Array<UserType>
+    pageSize: number
+    totalUsersAmount: number
+    currentPage: number
 }
 
 export type UsersReducerACsType =
     ReturnType<typeof followAC>
     | ReturnType<typeof unFollowAC>
     | ReturnType<typeof setUsersAC>
+    | ReturnType<typeof changePageAC>
+    | ReturnType<typeof setUserTotalCountAC>
 
 //actionCreators
 export const followAC = (userID: number) => {
@@ -54,9 +61,28 @@ export const setUsersAC = (users: Array<UserType>) => {
     } as const
 }
 
+export const changePageAC = (page: number) => {
+    return {
+        type: CHANGE_PAGE,
+        page
+    } as const
+}
+
+export const setUserTotalCountAC = (totalCount: number) => {
+    return {
+        type: SET_TOTAL_USERS_COUNT,
+        totalCount
+    } as const
+}
+
+
+
 //initialState
 const initialState: UsersPageType = {
-    users: []
+    users: [],
+    pageSize: 20,
+    totalUsersAmount: 114,
+    currentPage: 1
 }
 
 //reducer
@@ -67,7 +93,11 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersR
         case UNFOLLOW_USER:
             return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: false} : u)}
         case SET_USERS:
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
+        case CHANGE_PAGE:
+            return {...state, currentPage: action.page}
+        // case SET_TOTAL_USERS_COUNT:
+        //     return {...state, totalUsersAmount: action.totalCount}
         default:
             return state
     }
