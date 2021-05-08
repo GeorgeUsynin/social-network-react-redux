@@ -14,6 +14,7 @@ import {Dispatch} from "redux";
 import axios from "axios";
 import {Users} from "./Users";
 import preloader from '../../images/preloader.svg'
+import {axiosInstance} from "../../axios-configuration/axiosConfiguration";
 
 export type UsersPropsType = MapStateType & MapDispatchType
 
@@ -33,19 +34,15 @@ type MapDispatchType = {
 //UsersContainer получает props чререз connect, отправляет запросы на сервер, отрисовывает
 //презентационную (тупую) компоненту Users
 class UsersContainer extends React.Component<UsersPropsType> {
-    // axiosInstance - сконфигурированный axios, withCredentials: true - автоматически отправляет куки в запросах
-    axiosInstance = axios.create({
-        baseURL: 'https://social-network.samuraijs.com/api/1.0',
-        // baseURL:'https://social-network.samuraijs.com/api/2.0.1',
-        withCredentials: true
-    })
+
+
 
     componentDidMount() {
 
         //показываем preloader пока загружаются данные с сервера
         this.props.setIsFetching(true)
 
-        this.axiosInstance
+        axiosInstance
             .get(`/users?page=${this.props.usersPage.currentPage}&count=${this.props.usersPage.pageSize}`)
             .then(response => {
                 this.props.setUsers(response.data.items)
@@ -61,7 +58,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
         this.props.setIsFetching(true)
 
-        this.axiosInstance
+        axiosInstance
             .get(`/users?page=${page}&count=${this.props.usersPage.pageSize}`)
             .then(response => {
                 this.props.setUsers(response.data.items)
