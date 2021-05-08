@@ -2,7 +2,7 @@ const FOLLOW_USER = 'FOLLOW_USER'
 const UNFOLLOW_USER = 'UNFOLLOW_USER'
 const SET_USERS = 'SET_USERS'
 const CHANGE_PAGE = 'CHANGE_PAGE'
-const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
+// const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 
 
 //types
@@ -37,7 +37,7 @@ export type UsersReducerACsType =
     | ReturnType<typeof unFollowAC>
     | ReturnType<typeof setUsersAC>
     | ReturnType<typeof changePageAC>
-    | ReturnType<typeof setUserTotalCountAC>
+    // | ReturnType<typeof setUserTotalCountAC>
 
 //actionCreators
 export const followAC = (userID: number) => {
@@ -68,12 +68,12 @@ export const changePageAC = (page: number) => {
     } as const
 }
 
-export const setUserTotalCountAC = (totalCount: number) => {
-    return {
-        type: SET_TOTAL_USERS_COUNT,
-        totalCount
-    } as const
-}
+// export const setUserTotalCountAC = (totalCount: number) => {
+//     return {
+//         type: SET_TOTAL_USERS_COUNT,
+//         totalCount
+//     } as const
+// }
 
 
 
@@ -81,7 +81,7 @@ export const setUserTotalCountAC = (totalCount: number) => {
 const initialState: UsersPageType = {
     users: [],
     pageSize: 20,
-    totalUsersAmount: 114,
+    totalUsersAmount: 67,
     currentPage: 1
 }
 

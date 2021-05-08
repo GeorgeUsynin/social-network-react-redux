@@ -6,7 +6,6 @@ import {
     changePageAC,
     followAC,
     setUsersAC,
-    setUserTotalCountAC,
     unFollowAC,
     UsersPageType,
     UserType
