@@ -1,4 +1,4 @@
-import usersReducer, {followAC, setUsersAC, unFollowAC, UsersPageType} from "./users-reducer";
+import usersReducer, {followAC, setUsers, unFollow, UsersPageType} from "./users-reducer";
 
 let initialState: UsersPageType
 
@@ -54,7 +54,7 @@ beforeEach(()=>{
 test('followed status should changed', ()=>{
 
     const newStateFollow: UsersPageType = usersReducer(initialState, followAC(1))
-    const newStateUnfollow: UsersPageType = usersReducer(initialState, unFollowAC(2))
+    const newStateUnfollow: UsersPageType = usersReducer(initialState, unFollow(2))
 
     expect(newStateFollow.users[0].followed).toBeTruthy()
     expect(newStateUnfollow.users[1].followed).toBeFalsy()
@@ -94,7 +94,7 @@ test('users should be set', ()=>{
             }
         ]
 
-    const newState: UsersPageType = usersReducer(initialState, setUsersAC(newUsers))
+    const newState: UsersPageType = usersReducer(initialState, setUsers(newUsers))
 
     expect(newState.users[3].name).toBe('Alex')
     expect(newState.users[4].name).toBe('Bob')
