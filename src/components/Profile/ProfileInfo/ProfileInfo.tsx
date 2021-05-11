@@ -1,9 +1,16 @@
 import classes from "./ProfileInfo.module.css";
-import avatar from "../../../images/avatar.png";
 import React from "react";
+import {ProfilePropsType} from "../Profile";
+import {Preloader} from "../../common/Preloader";
 
-const ProfileInfo = () =>{
-    return(
+
+const ProfileInfo: React.FC<ProfilePropsType> = (props) => {
+
+    if (!props.userProfile) {
+        return <Preloader/>
+    }
+
+    return (
         <div>
             <div className={classes.background_image}>
                 <img
@@ -12,8 +19,11 @@ const ProfileInfo = () =>{
             </div>
             <div className={classes.avatar}>
                 <img
-                    src={avatar}
+                    src={props.userProfile.photos.small ? props.userProfile.photos.small : ''}
                     alt="avatar"/>
+            </div>
+            <div>
+                {props.userProfile.lookingForAJobDescription}
             </div>
         </div>
     )

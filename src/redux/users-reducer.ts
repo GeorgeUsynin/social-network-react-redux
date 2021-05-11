@@ -12,9 +12,9 @@ type UserLocationType = {
     country: string
 }
 
-type UserPhotoType = {
-    small: string
-    large: string
+export type UserPhotoType = {
+    small: string | null
+    large: string | null
 }
 
 export type UserType = {

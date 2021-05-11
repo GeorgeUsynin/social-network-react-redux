@@ -2,6 +2,7 @@ import React from "react";
 import cls from "./Users.module.css";
 import {v1} from "uuid";
 import {UserType} from "../../redux/users-reducer";
+import {NavLink} from "react-router-dom";
 
 type UsersPropsType = {
     users: Array<UserType>
@@ -20,7 +21,7 @@ export const Users: React.FC<UsersPropsType> = (props) => {
 
     let pages = []
 
-    for(let i=1; i<=pagesCount; i++){
+    for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
 
@@ -28,12 +29,12 @@ export const Users: React.FC<UsersPropsType> = (props) => {
         <div>
             <span className={cls.spanPagesName}>Pages: </span>
             {
-                pages.map(p=>{
+                pages.map(p => {
                     return (
                         <span
                             key={v1()}
-                            className={p === props.currentPage ? `${cls.selectedPage} ${cls.spanPageNumber}`: cls.spanPageNumber}
-                            onClick={()=>props.onPageChanged(p)}
+                            className={p === props.currentPage ? `${cls.selectedPage} ${cls.spanPageNumber}` : cls.spanPageNumber}
+                            onClick={() => props.onPageChanged(p)}
                         >{p}</span>
                     )
                 })
@@ -43,8 +44,12 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                     return (
                         <div key={u.id} className={cls.wrapper_user}>
                             <div className={cls.avatar_button}>
-                                <div className={cls.avatar}><img
-                                    src={u.photos.small !== null ? u.photos.small : 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png'}/>
+                                <div className={cls.avatar}>
+                                    <NavLink to={'/profile/' + u.id.toString()}>
+                                        <img
+                                            src={u.photos.small !== null ? u.photos.small : 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png'}
+                                        />
+                                    </NavLink>
                                 </div>
                                 <div className={cls.button_wrapper}>
                                     <button
@@ -60,6 +65,6 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                     );
                 })
             }
-        </div>
-    )
-}
+                </div>
+                )
+            }

@@ -13,6 +13,7 @@ import {
 import {Users} from "./Users";
 import preloader from '../../images/preloader.svg'
 import {axiosInstance} from "../../axios-configuration/axiosConfiguration";
+import {Preloader} from "../common/Preloader";
 
 type MapStateType = {
     users: Array<UserType>,
@@ -21,7 +22,6 @@ type MapStateType = {
     totalUsersAmount: number,
     isFetching: boolean
 }
-
 
 
 type UsersPropsType = {
@@ -46,9 +46,8 @@ type UsersPropsType = {
 class UsersContainer extends React.Component<UsersPropsType> {
 
 
-
     componentDidMount() {
-
+        //baseURL: 'https://social-network.samuraijs.com/api/1.0'
         //показываем preloader пока загружаются данные с сервера
         this.props.setIsFetching(true)
 
@@ -82,9 +81,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
                 {
                     this.props.isFetching
                         ?
-                        <div>
-                            <img src={preloader} alt="preloader"/>
-                        </div>
+                        <Preloader/>
                         :
                         <Users
                             users={this.props.users}
