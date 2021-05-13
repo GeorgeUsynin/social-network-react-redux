@@ -4,7 +4,7 @@ import {ProfilePropsType} from "../Profile";
 import {Preloader} from "../../common/Preloader";
 
 
-const ProfileInfo: React.FC<ProfilePropsType> = (props) => {
+const ProfileInfo: React.FC<ProfilePropsType> = React.memo((props) => {
 
     if (!props.userProfile) {
         return <Preloader/>
@@ -27,6 +27,6 @@ const ProfileInfo: React.FC<ProfilePropsType> = (props) => {
             </div>
         </div>
     )
-}
+})
 
 export default ProfileInfo;

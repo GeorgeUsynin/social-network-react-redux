@@ -45,4 +45,8 @@ const mapState = (state: AppStateType): MapStateType => {
     }
 }
 
+//let WitUrlDataContainerComponent = withRouter(ProfileContainer) - здесь мы создали отдельную перменную-ссылку и прокинули её в connect
+//export default connect(mapState, {setUserProfile})(WitUrlDataContainerComponent)
+
+
 export default connect(mapState, {setUserProfile})(withRouter(ProfileContainer))

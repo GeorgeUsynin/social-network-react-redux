@@ -3,6 +3,7 @@ import cls from "./Users.module.css";
 import {v1} from "uuid";
 import {UserType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
+import {User} from "./User";
 
 type UsersPropsType = {
     users: Array<UserType>
@@ -42,26 +43,16 @@ export const Users: React.FC<UsersPropsType> = (props) => {
             {
                 props.users.map(u => {
                     return (
-                        <div key={u.id} className={cls.wrapper_user}>
-                            <div className={cls.avatar_button}>
-                                <div className={cls.avatar}>
-                                    <NavLink to={'/profile/' + u.id.toString()}>
-                                        <img
-                                            src={u.photos.small !== null ? u.photos.small : 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png'}
-                                        />
-                                    </NavLink>
-                                </div>
-                                <div className={cls.button_wrapper}>
-                                    <button
-                                        onClick={u.followed ? () => props.unFollowUser(u.id) : () => props.followUser(u.id)}>{u.followed ? 'Follow' : 'Unfollow'}</button>
-                                </div>
-                            </div>
-                            <div className={cls.description}>
-                                <div>{u.name}</div>
-                                {/*<div>{u.location.city}, {u.location.country}</div>*/}
-                                <div>{u.status}</div>
-                            </div>
-                        </div>
+                        <User
+                            key={u.id}
+                            id={u.id}
+                            photos={u.photos}
+                            name={u.name}
+                            status={u.status}
+                            followed={u.followed}
+                            followUser={props.followUser}
+                            unFollowUser={props.unFollowUser}
+                            />
                     );
                 })
             }
