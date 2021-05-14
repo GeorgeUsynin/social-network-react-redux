@@ -1,4 +1,4 @@
-import profileReducer, {addNewProfilePostAC, changeNewTextProfilePostAC, ProfilePageType} from "./profile-reducer";
+import {profileReducer,addNewProfilePostAC, changeNewTextProfilePostAC, ProfilePageType} from "./profile-reducer";
 
 test('new post should be added', () => {
     const initialState: ProfilePageType = {
@@ -12,7 +12,8 @@ test('new post should be added', () => {
             {id: 3, message: "Hi there, I learned map", likeCounts: 666},
             {id: 4, message: "Hi there, I learned filter", likeCounts: 67}
         ],
-        newPostMessage: "hello"
+        newPostMessage: "hello",
+        userProfile: null
     }
 
     const newState = profileReducer(initialState, addNewProfilePostAC())
@@ -37,6 +38,7 @@ test('text in profile post should changed', () => {
             {id: 4, message: "Hi there, I learned filter", likeCounts: 67}
         ],
         newPostMessage: "",
+        userProfile: null
     }
 
     const newState = profileReducer(initialState, changeNewTextProfilePostAC('kiskis'))

@@ -3,7 +3,6 @@ import {UserPhotoType} from "../../redux/users-reducer";
 import cls from "./Users.module.css";
 import {NavLink} from "react-router-dom";
 import {axiosInstance} from "../../axios-configuration/axiosConfiguration";
-import axios from "axios";
 
 type UserPropsType = {
     id: number

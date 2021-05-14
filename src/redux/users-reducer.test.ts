@@ -1,7 +1,4 @@
-import {follow, setUsers, UsersPageType, usersReducer} from "./users-reducer";
-import {axiosInstance} from "../axios-configuration/axiosConfiguration";
-import axios from "axios";
-import React from "react";
+import {follow, setCurrentPage, setUsers, unFollow, UsersPageType, usersReducer} from "./users-reducer";
 
 
 let initialState: UsersPageType
@@ -51,7 +48,11 @@ beforeEach(()=>{
                     country: 'Germany'
                 }
             }
-        ]
+        ],
+        pageSize: 20,
+        totalUsersAmount: 135,
+        currentPage: 1,
+        isFetching: false
     }
 })
 
@@ -105,5 +106,13 @@ test('users should be set', ()=>{
     expect(newState.users.length).toBe(5)
     expect(newState.users[0].id).toBe(1)
 
+})
+
+test('page should be changed',()=>{
+
+    const newState: UsersPageType = usersReducer(initialState, setCurrentPage(3))
+
+    expect(initialState.currentPage).toBe(1)
+    expect(newState.currentPage).toBe(3)
 })
 

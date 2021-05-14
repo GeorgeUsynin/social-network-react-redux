@@ -1,4 +1,4 @@
-import dialogsReducer, {addNewDialogMessageAC, changeNewTextDialogMessageAC, DialogPageType} from "./dialog-reducer";
+import {dialogsReducer, addNewDialogMessageAC, changeNewTextDialogMessageAC, DialogPageType} from "./dialog-reducer";
 
 test('new dialog message should be added', () => {
     const initialState: DialogPageType = {
