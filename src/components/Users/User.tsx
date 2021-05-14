@@ -2,6 +2,8 @@ import React from "react";
 import {UserPhotoType} from "../../redux/users-reducer";
 import cls from "./Users.module.css";
 import {NavLink} from "react-router-dom";
+import {axiosInstance} from "../../axios-configuration/axiosConfiguration";
+import axios from "axios";
 
 type UserPropsType = {
     id: number
@@ -9,11 +11,11 @@ type UserPropsType = {
     name: string
     status: string
     followed: boolean
-    followUser: (id: number)=> void
-    unFollowUser: (id: number)=> void
+    followUser: (id: number) => void
+    unFollowUser: (id: number) => void
 }
 
-export const User: React.FC<UserPropsType> = React.memo((props)=>{
+export const User: React.FC<UserPropsType> = React.memo((props) => {
 
     console.log('User')
 
@@ -27,7 +29,7 @@ export const User: React.FC<UserPropsType> = React.memo((props)=>{
         unFollowUser
     } = props
 
-    return(
+    return (
         <div className={cls.wrapper_user}>
             <div className={cls.avatar_button}>
                 <div className={cls.avatar}>
@@ -38,8 +40,31 @@ export const User: React.FC<UserPropsType> = React.memo((props)=>{
                     </NavLink>
                 </div>
                 <div className={cls.button_wrapper}>
-                    <button
-                        onClick={followed ? () => unFollowUser(id) : () => followUser(id)}>{followed ? 'Follow' : 'Unfollow'}</button>
+                    {
+                        followed
+                            ?
+                            <button onClick={() => {
+                                axiosInstance.delete(`/follow/${id}`)
+                                    .then(response => {
+                                            if (response.data.resultCode === 0) {
+                                                unFollowUser(id)
+                                            }
+                                        }
+                                    )
+                            }}> Unfollow </button>
+                            :
+                            <button onClick={() => {
+                                axiosInstance.post(`/follow/${id}`)
+                                    .then(response => {
+                                            if (response.data.resultCode === 0) {
+                                                followUser(id)
+                                            }
+                                        }
+                                    )
+                            }}> Follow </button>
+                    }
+                    {/*<button*/}
+                    {/*    onClick={followed ? () => unFollowUser(id) : () => followUser(id)}>{followed ? 'Unfollow' : 'Follow'}</button>*/}
                 </div>
             </div>
             <div className={cls.description}>

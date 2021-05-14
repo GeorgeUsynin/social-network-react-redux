@@ -36,7 +36,7 @@ test('text in profile post should changed', () => {
             {id: 3, message: "Hi there, I learned map", likeCounts: 666},
             {id: 4, message: "Hi there, I learned filter", likeCounts: 67}
         ],
-        newPostMessage: ""
+        newPostMessage: "",
     }
 
     const newState = profileReducer(initialState, changeNewTextProfilePostAC('kiskis'))

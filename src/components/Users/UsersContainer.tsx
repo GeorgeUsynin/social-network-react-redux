@@ -55,7 +55,6 @@ class UsersContainer extends React.Component<UsersPropsType> {
             .get(`/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then(response => {
                 this.props.setUsers(response.data.items)
-
                 //убираем preloader после загрузки и установки в state новой порции users
                 this.props.setIsFetching(false)
                 // this.props.setTotalUsersCount(response.data.totalCount)

@@ -14,7 +14,9 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
         axiosInstance.get('/auth/me')
             .then((response) => {
-                this.props.setAuthUserData(response.data.data)
+                if (response.data.resultCode === 0){
+                    this.props.setAuthUserData(response.data.data)
+                }
             })
     }
 

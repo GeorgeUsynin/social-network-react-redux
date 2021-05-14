@@ -1,4 +1,8 @@
-import usersReducer, {followAC, setUsers, unFollow, UsersPageType} from "./users-reducer";
+import {follow, setUsers, UsersPageType, usersReducer} from "./users-reducer";
+import {axiosInstance} from "../axios-configuration/axiosConfiguration";
+import axios from "axios";
+import React from "react";
+
 
 let initialState: UsersPageType
 
@@ -53,7 +57,7 @@ beforeEach(()=>{
 
 test('followed status should changed', ()=>{
 
-    const newStateFollow: UsersPageType = usersReducer(initialState, followAC(1))
+    const newStateFollow: UsersPageType = usersReducer(initialState, follow(1))
     const newStateUnfollow: UsersPageType = usersReducer(initialState, unFollow(2))
 
     expect(newStateFollow.users[0].followed).toBeTruthy()
@@ -102,3 +106,4 @@ test('users should be set', ()=>{
     expect(newState.users[0].id).toBe(1)
 
 })
+
