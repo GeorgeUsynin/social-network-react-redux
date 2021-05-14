@@ -11,7 +11,6 @@ type UserPropsType = {
     followed: boolean
     followUser: (id: number)=> void
     unFollowUser: (id: number)=> void
-
 }
 
 export const User: React.FC<UserPropsType> = React.memo((props)=>{

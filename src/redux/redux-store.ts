@@ -1,8 +1,9 @@
 import {combineReducers, createStore} from "redux";
-import profileReducer from "./profile-reducer";
-import dialogsReducer from "./dialog-reducer";
-import sidebarReducer from "./sidebar-reducer";
-import usersReducer from "./users-reducer";
+import {usersReducer} from "./users-reducer";
+import {profileReducer} from "./profile-reducer";
+import {dialogsReducer} from "./dialog-reducer";
+import {sidebarReducer} from "./sidebar-reducer";
+import {authReducer} from "./auth-reducer";
 
 //types
 export type AppStateType = ReturnType<typeof rootReducer>
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogPage: dialogsReducer,
     usersPage: usersReducer,
-    sidebar: sidebarReducer
+    sidebar: sidebarReducer,
+    auth: authReducer
 })
 
 //create store

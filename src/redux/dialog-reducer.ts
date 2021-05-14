@@ -64,7 +64,7 @@ const initialState: DialogPageType = {
 }
 
 //reducer
-const dialogsReducer = (state: DialogPageType = initialState, action: DialogPageACsType): DialogPageType => {
+export const dialogsReducer = (state: DialogPageType = initialState, action: DialogPageACsType): DialogPageType => {
     switch (action.type) {
         case ADD_NEW_DIALOG_MESSAGE:
             const newMessage: MessageType = {
@@ -83,5 +83,3 @@ const dialogsReducer = (state: DialogPageType = initialState, action: DialogPage
             return state
     }
 }
-
-export default dialogsReducer;

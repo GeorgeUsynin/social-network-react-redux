@@ -116,5 +116,3 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersR
             return state
     }
 }
-
-export default usersReducer;

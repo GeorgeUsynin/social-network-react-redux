@@ -1,12 +1,38 @@
 import React from 'react';
-import classes from "./Header.module.css";
+import cls from "./Header.module.css";
 import logo from "../../images/nodejs.png"
+import {NavLink} from 'react-router-dom';
 
-const Header = () => {
+type HeaderPropsType = {
+    userId: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean
+}
+
+const Header: React.FC<HeaderPropsType> = (props) => {
+
+    const {
+        userId,
+        email,
+        isAuth,
+        login
+    } = props
+
     return (
-        <header className={classes.header}>
+        <header className={cls.header}>
             <img src={logo}
                  alt="logo"/>
+            <div className={cls.loginBlock}>
+                {
+                    isAuth
+                        ?
+                        login
+                        :
+                        <NavLink to={'/login'}>Login</NavLink>
+                }
+
+            </div>
         </header>
     );
 }
