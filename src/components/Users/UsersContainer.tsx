@@ -5,15 +5,13 @@ import {
     follow,
     setCurrentPage,
     setIsFetching,
-    setUsers,
+    setUsers, toggleFollowingProgress,
     unFollow,
-    UsersPageType,
     UserType
 } from "../../redux/users-reducer";
 import {Users} from "./Users";
-import preloader from '../../images/preloader.svg'
-import {axiosInstance} from "../../axios-configuration/axiosConfiguration";
 import {Preloader} from "../common/Preloader";
+import {usersAPI} from "../../api/api";
 
 type MapStateType = {
     users: Array<UserType>,
@@ -21,6 +19,7 @@ type MapStateType = {
     pageSize: number,
     totalUsersAmount: number,
     isFetching: boolean
+    followingInProgress: Array<number>
 }
 
 
@@ -30,6 +29,7 @@ type UsersPropsType = {
     setUsers: (users: Array<UserType>) => void
     setCurrentPage: (page: number) => void
     setIsFetching: (isFetching: boolean) => void
+    toggleFollowingProgress: (isFetching: boolean, UserId: number) => void
 } & MapStateType
 
 // type MapDispatchType = {
@@ -51,10 +51,9 @@ class UsersContainer extends React.Component<UsersPropsType> {
         //показываем preloader пока загружаются данные с сервера
         this.props.setIsFetching(true)
 
-        axiosInstance
-            .get(`/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.setUsers(response.data.items)
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
+                this.props.setUsers(data.items)
                 //убираем preloader после загрузки и установки в state новой порции users
                 this.props.setIsFetching(false)
                 // this.props.setTotalUsersCount(response.data.totalCount)
@@ -66,10 +65,9 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
         this.props.setIsFetching(true)
 
-        axiosInstance
-            .get(`/users?page=${page}&count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.setUsers(response.data.items)
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
+                this.props.setUsers(data.items)
                 this.props.setIsFetching(false)
             })
     }
@@ -90,6 +88,8 @@ class UsersContainer extends React.Component<UsersPropsType> {
                             followUser={this.props.follow}
                             unFollowUser={this.props.unFollow}
                             onPageChanged={this.onPageChanged}
+                            followingInProgress={this.props.followingInProgress}
+                            toggleFollowingProgress={this.props.toggleFollowingProgress}
                         />
                 }
             </React.Fragment>
@@ -104,7 +104,8 @@ const mapState = (state: AppStateType): MapStateType => {
         currentPage: state.usersPage.currentPage,
         pageSize: state.usersPage.pageSize,
         totalUsersAmount: state.usersPage.totalUsersAmount,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -136,6 +137,7 @@ export default connect(mapState, {
     unFollow,
     setUsers,
     setCurrentPage,
-    setIsFetching
+    setIsFetching,
+    toggleFollowingProgress
 })(UsersContainer)
 

@@ -12,6 +12,8 @@ type UsersPropsType = {
     followUser: (userID: number) => void
     unFollowUser: (userID: number) => void
     onPageChanged: (page: number) => void
+    followingInProgress: Array<number>
+    toggleFollowingProgress: (isFetching: boolean, UserId: number) => void
 }
 
 
@@ -51,10 +53,12 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                             followed={u.followed}
                             followUser={props.followUser}
                             unFollowUser={props.unFollowUser}
-                            />
+                            followingInProgress={props.followingInProgress}
+                            toggleFollowingProgress={props.toggleFollowingProgress}
+                        />
                     );
                 })
             }
-                </div>
-                )
-            }
+        </div>
+    )
+}

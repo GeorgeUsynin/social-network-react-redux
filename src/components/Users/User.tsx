@@ -2,7 +2,7 @@ import React from "react";
 import {UserPhotoType} from "../../redux/users-reducer";
 import cls from "./Users.module.css";
 import {NavLink} from "react-router-dom";
-import {axiosInstance} from "../../axios-configuration/axiosConfiguration";
+import {usersAPI} from "../../api/api";
 
 type UserPropsType = {
     id: number
@@ -12,6 +12,8 @@ type UserPropsType = {
     followed: boolean
     followUser: (id: number) => void
     unFollowUser: (id: number) => void
+    followingInProgress: Array<number>
+    toggleFollowingProgress: (isFetching: boolean, UserId: number) => void
 }
 
 export const User: React.FC<UserPropsType> = React.memo((props) => {
@@ -25,7 +27,9 @@ export const User: React.FC<UserPropsType> = React.memo((props) => {
         status,
         followed,
         followUser,
-        unFollowUser
+        unFollowUser,
+        followingInProgress,
+        toggleFollowingProgress
     } = props
 
     return (
@@ -42,24 +46,30 @@ export const User: React.FC<UserPropsType> = React.memo((props) => {
                     {
                         followed
                             ?
-                            <button onClick={() => {
-                                axiosInstance.delete(`/follow/${id}`)
-                                    .then(response => {
-                                            if (response.data.resultCode === 0) {
+                            <button disabled={followingInProgress.some(uId => uId === id)} onClick={() => {
+                                toggleFollowingProgress(true, id)
+                                usersAPI.unFollowUser(id)
+                                    .then(data => {
+                                            if (data.resultCode === 0) {
                                                 unFollowUser(id)
                                             }
+                                        toggleFollowingProgress(false, id)
                                         }
                                     )
+
                             }}> Unfollow </button>
                             :
-                            <button onClick={() => {
-                                axiosInstance.post(`/follow/${id}`)
-                                    .then(response => {
-                                            if (response.data.resultCode === 0) {
+                            <button disabled={followingInProgress.some(uId => uId === id)} onClick={() => {
+                                toggleFollowingProgress(true, id)
+                                usersAPI.followUser(id)
+                                    .then(data => {
+                                            if (data.resultCode === 0) {
                                                 followUser(id)
                                             }
+                                        toggleFollowingProgress(false, id)
                                         }
                                     )
+
                             }}> Follow </button>
                     }
                     {/*<button*/}

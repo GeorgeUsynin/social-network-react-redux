@@ -3,6 +3,7 @@ const UNFOLLOW_USER = 'UNFOLLOW_USER'
 const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 // const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 
 
@@ -32,6 +33,7 @@ export type UsersPageType = {
     totalUsersAmount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<number>
 }
 
 export type UsersReducerACsType =
@@ -40,7 +42,8 @@ export type UsersReducerACsType =
     | ReturnType<typeof setUsers>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setIsFetching>
-    // | ReturnType<typeof setUserTotalCountAC>
+    | ReturnType<typeof toggleFollowingProgress>
+// | ReturnType<typeof setUserTotalCountAC>
 
 //actionCreators
 export const follow = (userID: number) => {
@@ -79,6 +82,14 @@ export const setIsFetching = (isFetching: boolean) => {
     } as const
 }
 
+export const toggleFollowingProgress = (isFetching: boolean, userId: number) => {
+    return {
+        type: TOGGLE_IS_FOLLOWING_PROGRESS,
+        isFetching,
+        userId
+    } as const
+}
+
 // export const setUserTotalCountAC = (totalCount: number) => {
 //     return {
 //         type: SET_TOTAL_USERS_COUNT,
@@ -87,14 +98,14 @@ export const setIsFetching = (isFetching: boolean) => {
 // }
 
 
-
 //initialState
 const initialState: UsersPageType = {
     users: [],
     pageSize: 20,
     totalUsersAmount: 135,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingInProgress: []
 }
 
 //reducer
@@ -110,6 +121,13 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersR
             return {...state, currentPage: action.page}
         case TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.isFetching}
+        case TOGGLE_IS_FOLLOWING_PROGRESS:
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id !== action.userId)
+            }
         // case SET_TOTAL_USERS_COUNT:
         //     return {...state, totalUsersAmount: action.totalCount}
         default:

@@ -3,8 +3,8 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {setUserProfile, UserProfileType} from "../../redux/profile-reducer";
-import {axiosInstance} from "../../axios-configuration/axiosConfiguration";
-import {RouteComponentProps, withRouter } from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
+import {usersAPI} from "../../api/api";
 
 type ParamsPropsType = {
     userId: string
@@ -24,9 +24,9 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId) userId = '2'
-        axiosInstance.get('/profile/' + userId)
-            .then(response => {
-                this.props.setUserProfile(response.data)
+       usersAPI.setUserProfile(userId)
+            .then(data => {
+                this.props.setUserProfile(data)
             })
     }
 
