@@ -4,7 +4,7 @@ import cls from "./Users.module.css";
 import {NavLink} from "react-router-dom";
 import {usersAPI} from "../../api/api";
 
-type UserPropsType = {
+export type UserPropsType = {
     id: number
     photos: UserPhotoType
     name: string

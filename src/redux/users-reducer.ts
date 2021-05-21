@@ -1,3 +1,6 @@
+import {usersAPI} from "../api/api";
+import {AppThunkType} from "./redux-store";
+
 const FOLLOW_USER = 'FOLLOW_USER'
 const UNFOLLOW_USER = 'UNFOLLOW_USER'
 const SET_USERS = 'SET_USERS'
@@ -133,4 +136,20 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersR
         default:
             return state
     }
+}
+
+
+//thunks
+export const getUsers = (currentPage: number, pageSize: number): AppThunkType => (dispatch) => {
+    //baseURL: 'https://social-network.samuraijs.com/api/1.0'
+    //показываем preloader пока загружаются данные с сервера
+    dispatch(setIsFetching(true))
+
+    usersAPI.getUsers(currentPage, pageSize)
+        .then(data => {
+            dispatch(setUsers(data.items))
+            //убираем preloader после загрузки и установки в state новой порции users
+            dispatch(setIsFetching(false))
+            // this.props.setTotalUsersCount(response.data.totalCount)
+        })
 }

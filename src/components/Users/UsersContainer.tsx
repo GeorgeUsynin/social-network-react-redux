@@ -3,15 +3,14 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {
     follow,
+    getUsers,
     setCurrentPage,
-    setIsFetching,
-    setUsers, toggleFollowingProgress,
+    toggleFollowingProgress,
     unFollow,
     UserType
 } from "../../redux/users-reducer";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader";
-import {usersAPI} from "../../api/api";
 
 type MapStateType = {
     users: Array<UserType>,
@@ -26,10 +25,9 @@ type MapStateType = {
 type UsersPropsType = {
     follow: (userID: number) => void
     unFollow: (userID: number) => void
-    setUsers: (users: Array<UserType>) => void
     setCurrentPage: (page: number) => void
-    setIsFetching: (isFetching: boolean) => void
     toggleFollowingProgress: (isFetching: boolean, UserId: number) => void
+    getUsers: (currentPage: number, pageSize: number) => void
 } & MapStateType
 
 // type MapDispatchType = {
@@ -47,29 +45,14 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
 
     componentDidMount() {
-        //baseURL: 'https://social-network.samuraijs.com/api/1.0'
-        //показываем preloader пока загружаются данные с сервера
-        this.props.setIsFetching(true)
-
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.setUsers(data.items)
-                //убираем preloader после загрузки и установки в state новой порции users
-                this.props.setIsFetching(false)
-                // this.props.setTotalUsersCount(response.data.totalCount)
-            })
+        //our thunk
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (page: number) => {
         this.props.setCurrentPage(page)
-
-        this.props.setIsFetching(true)
-
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.setUsers(data.items)
-                this.props.setIsFetching(false)
-            })
+        //our thunk
+        this.props.getUsers(page, this.props.pageSize)
     }
 
     render() {
@@ -135,9 +118,8 @@ const mapState = (state: AppStateType): MapStateType => {
 export default connect(mapState, {
     follow,
     unFollow,
-    setUsers,
     setCurrentPage,
-    setIsFetching,
-    toggleFollowingProgress
+    toggleFollowingProgress,
+    getUsers
 })(UsersContainer)
 
