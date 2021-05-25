@@ -1,14 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {
-    follow,
-    getUsers,
-    setCurrentPage,
-    toggleFollowingProgress,
-    unFollow,
-    UserType
-} from "../../redux/users-reducer";
+import {followSuccess, getUsers, setCurrentPage, unFollowSuccess, UserType} from "../../redux/users-reducer";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader";
 
@@ -23,11 +16,10 @@ type MapStateType = {
 
 
 type UsersPropsType = {
-    follow: (userID: number) => void
-    unFollow: (userID: number) => void
     setCurrentPage: (page: number) => void
-    toggleFollowingProgress: (isFetching: boolean, UserId: number) => void
     getUsers: (currentPage: number, pageSize: number) => void
+    followSuccess: (userid: number) => void
+    unFollowSuccess: (userid: number) => void
 } & MapStateType
 
 // type MapDispatchType = {
@@ -68,11 +60,10 @@ class UsersContainer extends React.Component<UsersPropsType> {
                             currentPage={this.props.currentPage}
                             pageSize={this.props.pageSize}
                             totalUsersAmount={this.props.totalUsersAmount}
-                            followUser={this.props.follow}
-                            unFollowUser={this.props.unFollow}
                             onPageChanged={this.onPageChanged}
                             followingInProgress={this.props.followingInProgress}
-                            toggleFollowingProgress={this.props.toggleFollowingProgress}
+                            followSuccess={this.props.followSuccess}
+                            unFollowSuccess={this.props.unFollowSuccess}
                         />
                 }
             </React.Fragment>
@@ -116,10 +107,9 @@ const mapState = (state: AppStateType): MapStateType => {
 // }
 
 export default connect(mapState, {
-    follow,
-    unFollow,
     setCurrentPage,
-    toggleFollowingProgress,
-    getUsers
+    getUsers,
+    followSuccess,
+    unFollowSuccess
 })(UsersContainer)
 

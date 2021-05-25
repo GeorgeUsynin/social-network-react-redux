@@ -141,7 +141,6 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersR
 
 //thunks
 export const getUsers = (currentPage: number, pageSize: number): AppThunkType => (dispatch) => {
-    //baseURL: 'https://social-network.samuraijs.com/api/1.0'
     //показываем preloader пока загружаются данные с сервера
     dispatch(setIsFetching(true))
 
@@ -152,4 +151,28 @@ export const getUsers = (currentPage: number, pageSize: number): AppThunkType =>
             dispatch(setIsFetching(false))
             // this.props.setTotalUsersCount(response.data.totalCount)
         })
+}
+
+export const followSuccess = (id: number): AppThunkType => (dispatch) => {
+    dispatch(toggleFollowingProgress(true, id))
+    usersAPI.followUser(id)
+        .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(follow(id))
+                }
+                dispatch(toggleFollowingProgress(false, id))
+            }
+        )
+}
+
+export const unFollowSuccess = (id: number): AppThunkType => (dispatch) => {
+    dispatch(toggleFollowingProgress(true, id))
+    usersAPI.unFollowUser(id)
+        .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(unFollow(id))
+                }
+                dispatch(toggleFollowingProgress(false, id))
+            }
+        )
 }

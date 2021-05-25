@@ -10,10 +10,9 @@ export type UserPropsType = {
     name: string
     status: string
     followed: boolean
-    followUser: (id: number) => void
-    unFollowUser: (id: number) => void
     followingInProgress: Array<number>
-    toggleFollowingProgress: (isFetching: boolean, UserId: number) => void
+    followSuccess: (userid: number) => void
+    unFollowSuccess: (userid: number) => void
 }
 
 export const User: React.FC<UserPropsType> = React.memo((props) => {
@@ -26,10 +25,9 @@ export const User: React.FC<UserPropsType> = React.memo((props) => {
         name,
         status,
         followed,
-        followUser,
-        unFollowUser,
         followingInProgress,
-        toggleFollowingProgress
+        followSuccess,
+        unFollowSuccess
     } = props
 
     return (
@@ -47,29 +45,13 @@ export const User: React.FC<UserPropsType> = React.memo((props) => {
                         followed
                             ?
                             <button disabled={followingInProgress.some(uId => uId === id)} onClick={() => {
-                                toggleFollowingProgress(true, id)
-                                usersAPI.unFollowUser(id)
-                                    .then(data => {
-                                            if (data.resultCode === 0) {
-                                                unFollowUser(id)
-                                            }
-                                        toggleFollowingProgress(false, id)
-                                        }
-                                    )
-
+                                //our thunk
+                                unFollowSuccess(id)
                             }}> Unfollow </button>
                             :
                             <button disabled={followingInProgress.some(uId => uId === id)} onClick={() => {
-                                toggleFollowingProgress(true, id)
-                                usersAPI.followUser(id)
-                                    .then(data => {
-                                            if (data.resultCode === 0) {
-                                                followUser(id)
-                                            }
-                                        toggleFollowingProgress(false, id)
-                                        }
-                                    )
-
+                                //our thunk
+                                followSuccess(id)
                             }}> Follow </button>
                     }
                     {/*<button*/}

@@ -2,7 +2,7 @@ import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {setUserProfile, UserProfileType} from "../../redux/profile-reducer";
+import {setUserProfile, setUserProfileSuccess, UserProfileType} from "../../redux/profile-reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {usersAPI} from "../../api/api";
 
@@ -15,7 +15,7 @@ type MapStateType = {
 }
 
 type MapDispatchType = {
-    setUserProfile: (userProfile: UserProfileType) => void
+    setUserProfileSuccess: (id: string) => void
 }
 export type ProfileContainerPropsType = MapStateType & MapDispatchType & RouteComponentProps<ParamsPropsType>
 
@@ -24,10 +24,8 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId) userId = '2'
-        usersAPI.setUserProfile(userId)
-            .then(data => {
-                this.props.setUserProfile(data)
-            })
+        //our thunk
+        this.props.setUserProfileSuccess(userId)
     }
 
     render() {
@@ -49,4 +47,4 @@ const mapState = (state: AppStateType): MapStateType => {
 //export default connect(mapState, {setUserProfile})(WitUrlDataContainerComponent)
 
 
-export default connect(mapState, {setUserProfile})(withRouter(ProfileContainer))
+export default connect(mapState, {setUserProfileSuccess})(withRouter(ProfileContainer))

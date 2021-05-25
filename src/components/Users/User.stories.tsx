@@ -18,7 +18,6 @@ const photos = {
 
 const unFollowUserCallback = action('User was unfollowed')
 const followUserCallback = action('User was followed')
-const toggleFollowingProgress = action('toggleFollowingProgress')
 
 const Template: Story<UserPropsType> = (args) => <BrowserRouter><User {...args} /></BrowserRouter>
 
@@ -33,13 +32,7 @@ UserBaseExample.args = {
     },
     status: "I'm sleep",
     followed: true,
-    followingInProgress: [],
-    unFollowUser: () => {
-    },
-    toggleFollowingProgress: () => {
-    },
-    followUser: () => {
-    }
+    followingInProgress: []
 }
 
 export const ExampleUser2 = () => {
@@ -52,10 +45,10 @@ export const ExampleUser2 = () => {
                     name={'Elena'}
                     status={'Really status'}
                     followed={true}
-                    followUser={followUserCallback}
-                    unFollowUser={unFollowUserCallback}
                     followingInProgress={[]}
-                    toggleFollowingProgress={toggleFollowingProgress}/>
+                    unFollowSuccess={unFollowUserCallback}
+                    followSuccess={followUserCallback}
+                />
             </BrowserRouter>
         </div>
     )

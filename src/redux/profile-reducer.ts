@@ -1,4 +1,6 @@
 import {UserPhotoType} from "./users-reducer";
+import {AppThunkType} from "./redux-store";
+import {usersAPI} from "../api/api";
 
 const ADD_NEW_PROFILE_POST = 'ADD-NEW-PROFILE-POST'
 const CHANGE_NEW_TEXT_PROFILE_POST = 'CHANGE-NEW-TEXT-PROFILE-POST'
@@ -106,4 +108,11 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
         default:
             return state
     }
+}
+
+export const setUserProfileSuccess = (userId: string): AppThunkType => (dispatch) => {
+    usersAPI.setUserProfile(userId)
+        .then(data => {
+            dispatch(setUserProfile(data))
+        })
 }
