@@ -2,6 +2,7 @@ import classes from "./ProfileInfo.module.css";
 import React from "react";
 import {ProfilePropsType} from "../Profile";
 import {Preloader} from "../../common/Preloader";
+import {ProfileStatus} from "./ProfileStatus";
 
 
 const ProfileInfo: React.FC<ProfilePropsType> = React.memo((props) => {
@@ -22,9 +23,8 @@ const ProfileInfo: React.FC<ProfilePropsType> = React.memo((props) => {
                     src={props.userProfile.photos.small ? props.userProfile.photos.small : ''}
                     alt="avatar"/>
             </div>
-            <div>
-                {props.userProfile.lookingForAJobDescription}
-            </div>
+
+            <ProfileStatus status={'Лечу в космос'}/>
         </div>
     )
 })
