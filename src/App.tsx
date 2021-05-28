@@ -17,8 +17,8 @@ type AppPropsType = {}
 const App: React.FC<AppPropsType> = (props) => {
     //const state = props.store.getState()
 
-    return (
 
+    return (
         <div className="app-wrapper">
             <HeaderContainer/>
             <Sidebar/>

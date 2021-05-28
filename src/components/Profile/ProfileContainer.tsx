@@ -1,9 +1,11 @@
-import React from "react";
+import React, {ComponentType} from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {setUserProfileSuccess, UserProfileType} from "../../redux/profile-reducer";
-import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 type ParamsPropsType = {
     userId: string
@@ -11,7 +13,6 @@ type ParamsPropsType = {
 
 type MapStateType = {
     userProfile: UserProfileType
-    isAuth: boolean
 }
 
 type MapDispatchType = {
@@ -30,8 +31,6 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
     render() {
 
-        if (!this.props.isAuth) return <Redirect to={'/login'}/>
-
         return (
             <div>
                 <Profile userProfile={this.props.userProfile}/>
@@ -43,12 +42,20 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 const mapState = (state: AppStateType): MapStateType => {
     return {
         userProfile: state.profilePage.userProfile,
-        isAuth: state.auth.isAuth
     }
 }
 
-//let WitUrlDataContainerComponent = withRouter(ProfileContainer) - здесь мы создали отдельную перменную-ссылку и прокинули её в connect
-//export default connect(mapState, {setUserProfile})(WitUrlDataContainerComponent)
+
+// let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
+// let WitUrlDataContainerComponent = withRouter(AuthRedirectComponent) //- здесь мы создали отдельную перменную-ссылку и прокинули её в connect
+// export default connect(mapState, {setUserProfileSuccess})(WitUrlDataContainerComponent)
+
+//export default connect(mapState, {setUserProfileSuccess})(withRouter(withAuthRedirect(ProfileContainer)))
 
 
-export default connect(mapState, {setUserProfileSuccess})(withRouter(ProfileContainer))
+//use compose
+export default compose<ComponentType>(
+    connect(mapState, {setUserProfileSuccess}),
+    withRouter,
+    withAuthRedirect
+)(ProfileContainer)
