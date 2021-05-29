@@ -13,7 +13,8 @@ test('new post should be added', () => {
             {id: 4, message: "Hi there, I learned filter", likeCounts: 67}
         ],
         newPostMessage: "hello",
-        userProfile: null
+        userProfile: null,
+        status: ''
     }
 
     const newState = profileReducer(initialState, addNewProfilePostAC())
@@ -38,7 +39,8 @@ test('text in profile post should changed', () => {
             {id: 4, message: "Hi there, I learned filter", likeCounts: 67}
         ],
         newPostMessage: "",
-        userProfile: null
+        userProfile: null,
+        status:''
     }
 
     const newState = profileReducer(initialState, changeNewTextProfilePostAC('kiskis'))
