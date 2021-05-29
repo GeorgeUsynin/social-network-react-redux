@@ -24,9 +24,11 @@ const ProfileInfo: React.FC<ProfilePropsType> = React.memo((props) => {
                     alt="avatar"/>
             </div>
 
-            <ProfileStatus status={'Лечу в космос'}/>
+            <ProfileStatus
+                status={props.status}
+                updateUserStatus={props.updateUserStatus}/>
         </div>
     )
 })
 
-export default ProfileInfo;
+export default ProfileInfo
