@@ -1,5 +1,8 @@
 import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {connect} from "react-redux";
+import {loginMe} from "../../redux/auth-reducer";
+import {AppStateType} from "../../redux/redux-store";
 
 type FormDataType = {
     login: string
@@ -30,10 +33,10 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
 const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
-export const Login = () => {
+const Login = (props: mapDispatchToPropsType) => {
 
     const onSubmit = (formData: FormDataType) => {
-        console.log(formData)
+        props.loginMe(formData.login, formData.password, formData.rememberMe)
     }
 
     return (
@@ -49,3 +52,14 @@ export const Login = () => {
         </div>
     )
 }
+
+const mapStateToProps =  (state: AppStateType) => {
+    return {
+    }
+}
+
+type mapDispatchToPropsType = {
+    loginMe: (email: string, password: string, rememberMe: boolean) => void
+}
+
+export default connect (mapStateToProps,{loginMe})(Login)

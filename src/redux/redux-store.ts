@@ -25,11 +25,14 @@ const rootReducer = combineReducers({
     auth: authReducer,
     form: formReducer
 })
-//@ts-ignore
+
 
 
 //create store
 const store = createStore(rootReducer, applyMiddleware(thunk))
+
+//@ts-ignore
+window.store = store
 
 export default store;
 

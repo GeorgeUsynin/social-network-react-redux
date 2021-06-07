@@ -1,5 +1,4 @@
 const ADD_NEW_DIALOG_MESSAGE = 'ADD-NEW-DIALOG-MESSAGE'
-const CHANGE_NEW_TEXT_DIALOG_MESSAGE = 'CHANGE-NEW-TEXT-DIALOG-MESSAGE'
 
 //types
 type DialogType = {
@@ -16,24 +15,16 @@ type MessageType = {
 export type DialogPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
-    newDialogMessage: string
 }
 
 export type DialogPageACsType =
     ReturnType<typeof addNewDialogMessageAC>
-    | ReturnType<typeof changeNewTextDialogMessageAC>
 
 //actionCreators
-export const addNewDialogMessageAC = () => {
+export const addNewDialogMessageAC = (message: string) => {
     return {
-        type: ADD_NEW_DIALOG_MESSAGE
-    } as const
-}
-
-export const changeNewTextDialogMessageAC = (newText: string) => {
-    return {
-        type: CHANGE_NEW_TEXT_DIALOG_MESSAGE,
-        newText: newText
+        type: ADD_NEW_DIALOG_MESSAGE,
+        message
     } as const
 }
 
@@ -60,7 +51,6 @@ const initialState: DialogPageType = {
         {id: 2, message: "How is your wellness?"},
         {id: 3, message: "Where do you go?"},
     ],
-    newDialogMessage: ""
 }
 
 //reducer
@@ -69,16 +59,12 @@ export const dialogsReducer = (state: DialogPageType = initialState, action: Dia
         case ADD_NEW_DIALOG_MESSAGE:
             const newMessage: MessageType = {
                 id: Math.random() * 100,
-                message: state.newDialogMessage
+                message: action.message
             }
             return {
                 ...state,
                 messages: [...state.messages, newMessage],
-                newDialogMessage: ''
             }
-        case CHANGE_NEW_TEXT_DIALOG_MESSAGE:
-            state.newDialogMessage = action.newText
-            return {...state}
         default:
             return state
     }

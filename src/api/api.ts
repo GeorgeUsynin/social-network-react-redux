@@ -7,14 +7,17 @@ export const axiosInstance = axios.create({
     // baseURL:'https://social-network.samuraijs.com/api/2.0.1',
     withCredentials: true,
     headers: {
-        "API-KEY": "a657ef2e-9a7d-4c7c-abf7-6d73ab758a53"
+        "API-KEY": "941c5469-5622-4ccf-b6fe-38f424109ae0"
     }
 })
 
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
         return axiosInstance
-            .get(`/users?page=${currentPage}&count=${pageSize}`).then(response => response.data)
+            .get(`/users?page=${currentPage}&count=${pageSize}`).then(response => {
+                debugger
+                return response.data
+            })
     },
     unFollowUser(id: number) {
         return axiosInstance
@@ -52,5 +55,16 @@ export const authAPI = {
     authMe() {
         return axiosInstance
             .get('/auth/me').then(response => response.data)
+    },
+
+    loginMe(email: string, password: string, rememberMe: boolean){
+        return axiosInstance
+            .post('/auth/login',{
+                email,
+                password,
+                rememberMe
+            })
+            .then(response => response.data)
     }
+
 }

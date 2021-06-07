@@ -3,7 +3,6 @@ import {AppThunkType} from "./redux-store";
 import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_NEW_PROFILE_POST = 'ADD-NEW-PROFILE-POST'
-const CHANGE_NEW_TEXT_PROFILE_POST = 'CHANGE-NEW-TEXT-PROFILE-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_USER_STATUS = 'SET_USER_STATUS'
 
@@ -37,7 +36,6 @@ export type PostType = {
 }
 
 export type ProfilePageType = {
-    newPostMessage: string
     posts: Array<PostType>
     userProfile: UserProfileType
     status: string
@@ -45,22 +43,17 @@ export type ProfilePageType = {
 
 export type ProfileReducerACsType =
     ReturnType<typeof addNewProfilePostAC>
-    | ReturnType<typeof changeNewTextProfilePostAC>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setUserStatus>
 
 //actionCreators
-export const addNewProfilePostAC = () => {
+export const addNewProfilePostAC = (message: string) => {
     return {
-        type: ADD_NEW_PROFILE_POST
+        type: ADD_NEW_PROFILE_POST,
+        message
     } as const
 }
-export const changeNewTextProfilePostAC = (newText: string) => {
-    return {
-        type: CHANGE_NEW_TEXT_PROFILE_POST,
-        newText
-    } as const
-}
+
 
 export const setUserProfile = (userProfile: UserProfileType) => {
     return {
@@ -88,7 +81,6 @@ const initialState: ProfilePageType = {
         {id: 3, message: "Hi there, I learned map", likeCounts: 666},
         {id: 4, message: "Hi there, I learned filter", likeCounts: 67}
     ],
-    newPostMessage: "",
     userProfile: null,
     status: ''
 }
@@ -100,17 +92,13 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
         case ADD_NEW_PROFILE_POST:
             const newPost: PostType = {
                 id: Math.random() * 100,
-                message: state.newPostMessage,
+                message: action.message,
                 likeCounts: 0
             }
             return {
                 ...state,
-                posts: [...state.posts, newPost],
-                newPostMessage: ''
+                posts: [...state.posts, newPost]
             }
-        case CHANGE_NEW_TEXT_PROFILE_POST:
-            state.newPostMessage = action.newText
-            return {...state}
         case SET_USER_PROFILE:
             return {
                 ...state,

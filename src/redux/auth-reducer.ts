@@ -11,6 +11,8 @@ export type AuthType = {
     isAuth: boolean
 }
 
+export type LoginType = {}
+
 export type AuthReducerACsType = ReturnType<typeof setAuthUserData>
 
 //actionCreators
@@ -43,8 +45,24 @@ export const authReducer = (state: AuthType = initialState, action: AuthReducerA
 export const authMe = (): AppThunkType => (dispatch) => {
     authAPI.authMe()
         .then(data => {
-            if (data.resultCode === 0){
+            if (data.resultCode === 0) {
                 dispatch(setAuthUserData(data.data))
             }
         })
+}
+
+export const loginMe = (email: string, password: string, rememberMe: boolean): AppThunkType => (dispatch) => {
+    authAPI.loginMe(email, password, rememberMe)
+        .then(data => {
+            if (data.resultCode === 0) {
+                authAPI.authMe()
+                    .then(data => {
+                        if (data.resultCode === 0) {
+                            dispatch(setAuthUserData(data.data))
+                        }
+                    })
+                console.log('You are login')
+            }
+        })
+
 }
