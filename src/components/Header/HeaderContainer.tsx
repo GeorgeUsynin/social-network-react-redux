@@ -1,11 +1,12 @@
 import React from "react";
 import Header from "./Header";
-import {authMe, AuthType} from "../../redux/auth-reducer";
+import {authMe, AuthType, logout} from "../../redux/auth-reducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 
 type HeaderContainerPropsType = {
     authMe: () => void
+    logout: () => void
 } & AuthType
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType> {
@@ -31,4 +32,4 @@ const mapState = (state: AppStateType): AuthType => {
     }
 }
 
-export default connect(mapState, {authMe})(HeaderContainer)
+export default connect(mapState, {authMe, logout})(HeaderContainer)

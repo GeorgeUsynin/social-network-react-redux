@@ -4,7 +4,7 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {DialogsPropsType} from "./DialogsContainer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Textarea} from "../common/FormsControls/FormsControls";
+import {Element} from "../common/FormsControls/FormsControls";
 import {maxLengthCreator, required} from "../../utils/validators/validators";
 
 type FormDataType = {
@@ -46,6 +46,8 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
 export default Dialogs;
 
 const maxLength50 = maxLengthCreator(50)
+
+const Textarea = Element('textarea')
 
 const NewDialogMessageForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (

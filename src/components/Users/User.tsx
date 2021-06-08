@@ -61,7 +61,7 @@ export const User: React.FC<UserPropsType> = React.memo((props) => {
             <div className={cls.description}>
                 <div>{name}</div>
                 {/*<div>{u.location.city}, {u.location.country}</div>*/}
-                <div>{!status ? 'Status not fined' : status}</div>
+                <div>{!status ? 'Status not find' : status}</div>
             </div>
         </div>
     )

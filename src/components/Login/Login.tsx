@@ -3,6 +3,9 @@ import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import {loginMe} from "../../redux/auth-reducer";
 import {AppStateType} from "../../redux/redux-store";
+import {Element} from "../common/FormsControls/FormsControls";
+import {required} from "../../utils/validators/validators";
+import cls from './../common/FormsControls/FormsControls.module.css'
 
 type FormDataType = {
     login: string
@@ -10,18 +13,35 @@ type FormDataType = {
     rememberMe: boolean
 }
 
+const Input = Element('input')
+
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field placeholder={'login'} name={'login'} component={'input'}/>
+                <Field
+                    placeholder={'login'}
+                    name={'login'}
+                    component={Input}
+                    validate={[required]}
+                />
             </div>
             <div>
-                <Field placeholder={'password'} name={'password'} component={'input'}/>
+                <Field
+                    placeholder={'password'}
+                    name={'password'}
+                    component={Input}
+                    validate={[required]}
+                />
             </div>
             <div>
-                <Field type={'checkbox'} name={'rememberMe'} component={'input'}/>
+                <Field type={'checkbox'} name={'rememberMe'} component={Input}/>
             </div>
+            {
+                props.error && <div className={cls.resultError}>
+                    {props.error}
+                </div>
+            }
             <div>
                 <button>
                     Login
@@ -53,13 +73,9 @@ const Login = (props: mapDispatchToPropsType) => {
     )
 }
 
-const mapStateToProps =  (state: AppStateType) => {
-    return {
-    }
-}
 
 type mapDispatchToPropsType = {
     loginMe: (email: string, password: string, rememberMe: boolean) => void
 }
 
-export default connect (mapStateToProps,{loginMe})(Login)
+export default connect(null, {loginMe})(Login)

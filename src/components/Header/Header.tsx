@@ -8,6 +8,7 @@ type HeaderPropsType = {
     email: string | null
     login: string | null
     isAuth: boolean
+    logout: () => void
 }
 
 const Header: React.FC<HeaderPropsType> = (props) => {
@@ -16,7 +17,8 @@ const Header: React.FC<HeaderPropsType> = (props) => {
         userId,
         email,
         isAuth,
-        login
+        login,
+        logout
     } = props
 
     return (
@@ -27,7 +29,14 @@ const Header: React.FC<HeaderPropsType> = (props) => {
                 {
                     isAuth
                         ?
-                        login
+                        <div>
+                            <div>
+                                {login}
+                            </div>
+                            <div>
+                                <button onClick={logout}>Log out</button>
+                            </div>
+                        </div>
                         :
                         <NavLink to={'/login'}>Login</NavLink>
                 }

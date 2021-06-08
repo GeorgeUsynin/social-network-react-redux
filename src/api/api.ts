@@ -45,7 +45,7 @@ export const profileAPI = {
     },
     updateStatus(status: string) {
         return axiosInstance
-            .put(`/profile/status`,{
+            .put(`/profile/status`, {
                 status
             }).then(response => response.data)
     }
@@ -57,14 +57,18 @@ export const authAPI = {
             .get('/auth/me').then(response => response.data)
     },
 
-    loginMe(email: string, password: string, rememberMe: boolean){
+    loginMe(email: string, password: string, rememberMe: boolean) {
         return axiosInstance
-            .post('/auth/login',{
+            .post('/auth/login', {
                 email,
                 password,
                 rememberMe
             })
             .then(response => response.data)
+    },
+
+    logout(){
+        return axiosInstance.delete('/auth/login').then(response => response.data)
     }
 
 }
