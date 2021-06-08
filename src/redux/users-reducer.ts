@@ -1,4 +1,4 @@
-import {usersAPI} from "../api/api";
+import {ResultCodes, usersAPI} from "../api/api";
 import {AppThunkType} from "./redux-store";
 
 const FOLLOW_USER = 'FOLLOW_USER'
@@ -11,10 +11,6 @@ const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
 
 //types
-type UserLocationType = {
-    city: string
-    country: string
-}
 
 export type UserPhotoType = {
     small: string | null
@@ -27,7 +23,6 @@ export type UserType = {
     followed: boolean
     name: string
     status: string
-    location?: UserLocationType
 }
 
 export type UsersPageType = {
@@ -169,7 +164,7 @@ export const unFollowSuccess = (id: number): AppThunkType => (dispatch) => {
     dispatch(toggleFollowingProgress(true, id))
     usersAPI.unFollowUser(id)
         .then(data => {
-                if (data.resultCode === 0) {
+                if (data.resultCode === ResultCodes.Success) {
                     dispatch(unFollow(id))
                 }
                 dispatch(toggleFollowingProgress(false, id))

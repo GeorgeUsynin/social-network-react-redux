@@ -1,5 +1,5 @@
 import {AppThunkType} from "./redux-store";
-import {authAPI} from "../api/api";
+import {authAPI, ResultCodeForCaptcha, ResultCodes} from "../api/api";
 import {stopSubmit} from "redux-form";
 
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA'
@@ -48,8 +48,8 @@ export const authReducer = (state: AuthType = initialState, action: AuthReducerA
 export const authMe = (): AppThunkType => (dispatch) => {
     authAPI.authMe()
         .then(data => {
-            if (data.resultCode === 0) {
-                const {email, login, id} = data.data
+            if (data.resultCode === ResultCodes.Success) {
+                const {id, email, login} = data.data
                 dispatch(setAuthUserData({
                     userId: id,
                     email,
@@ -63,8 +63,7 @@ export const authMe = (): AppThunkType => (dispatch) => {
 export const loginMe = (email: string, password: string, rememberMe: boolean): AppThunkType => (dispatch) => {
     authAPI.loginMe(email, password, rememberMe)
         .then(data => {
-            debugger
-            if (data.resultCode === 0) {
+            if (data.resultCode === ResultCodes.Success) {
                 dispatch(authMe())
             } else if (data.messages.length > 0) {
                 let message = data.messages[0]
@@ -76,7 +75,7 @@ export const loginMe = (email: string, password: string, rememberMe: boolean): A
 export const logout = (): AppThunkType => (dispatch) => {
     authAPI.logout()
         .then(data => {
-            if (data.resultCode === 0) {
+            if (data.resultCode === ResultCodes.Success) {
                 dispatch(setAuthUserData({
                     userId: null,
                     email: null,

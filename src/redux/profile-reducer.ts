@@ -1,6 +1,6 @@
 import {UserPhotoType} from "./users-reducer";
 import {AppThunkType} from "./redux-store";
-import {profileAPI, usersAPI} from "../api/api";
+import {profileAPI, ResultCodes, usersAPI} from "../api/api";
 
 const ADD_NEW_PROFILE_POST = 'ADD-NEW-PROFILE-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -53,7 +53,6 @@ export const addNewProfilePostAC = (message: string) => {
         message
     } as const
 }
-
 
 export const setUserProfile = (userProfile: UserProfileType) => {
     return {
@@ -115,11 +114,12 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
 }
 
 export const setUserProfileSuccess = (userId: string): AppThunkType => (dispatch) => {
-    usersAPI.getProfile(userId)
+    profileAPI.getProfile(userId)
         .then(data => {
             dispatch(setUserProfile(data))
         })
 }
+
 export const getUserStatus = (userId: string): AppThunkType => (dispatch) => {
     profileAPI.getStatus(userId)
         .then(data => {
@@ -130,7 +130,8 @@ export const getUserStatus = (userId: string): AppThunkType => (dispatch) => {
 export const updateUserStatus = (status: string): AppThunkType => (dispatch) => {
     profileAPI.updateStatus(status)
         .then(data => {
-            if (data.resultCode === 0) {
+            debugger
+            if (data.resultCode === ResultCodes.Success) {
                 dispatch(setUserStatus(status))
             }
         })

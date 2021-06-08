@@ -1,4 +1,6 @@
 import axios from "axios";
+import {UserProfileType} from "../redux/profile-reducer";
+import {UserType} from "../redux/users-reducer";
 
 
 // axiosInstance - сконфигурированный axios, withCredentials: true - автоматически отправляет куки в запросах
@@ -11,41 +13,74 @@ export const axiosInstance = axios.create({
     }
 })
 
+// response types
+
+export enum ResultCodes {
+    Success = 0,
+    Error = 1
+}
+
+export enum ResultCodeForCaptcha {
+    CaptchaIsRequired = 10
+}
+
+type DefaultResponseType<D> = {
+    data: D
+    fieldsErrors?: Array<string>
+    messages: Array<string>
+    resultCode: ResultCodes
+}
+
+type GetUsersResponseType = {
+    items: Array<UserType>
+    totalCount: number
+    error: string | null
+}
+
+type MeResponseDataType = {
+    email: string
+    id: number
+    login: string
+}
+
+type LoginResponseType = {
+    data: { userId: number }
+    fieldsErrors: Array<string>
+    messages: Array<string>
+    resultCode: ResultCodes | ResultCodeForCaptcha
+}
+
+
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
         return axiosInstance
-            .get(`/users?page=${currentPage}&count=${pageSize}`).then(response => {
+            .get<GetUsersResponseType>(`/users?page=${currentPage}&count=${pageSize}`).then(response => {
                 debugger
                 return response.data
             })
     },
     unFollowUser(id: number) {
         return axiosInstance
-            .delete(`/follow/${id}`).then(response => response.data)
+            .delete<DefaultResponseType<{}>>(`/follow/${id}`).then(response => response.data)
     },
     followUser(id: number) {
         return axiosInstance
-            .post(`/follow/${id}`).then(response => response.data)
-    },
-    getProfile(userId: string) {
-        console.warn('Obsolete method. Please use profileAPI object')
-        return profileAPI.getProfile(userId)
+            .post<DefaultResponseType<{}>>(`/follow/${id}`).then(response => response.data)
     }
 }
-
 
 export const profileAPI = {
     getProfile(userId: string) {
         return axiosInstance
-            .get(`/profile/${userId}`).then(response => response.data)
+            .get<UserProfileType>(`/profile/${userId}`).then(response => response.data)
     },
     getStatus(userId: string) {
         return axiosInstance
-            .get(`/profile/status/${userId}`).then(response => response.data)
+            .get<string>(`/profile/status/${userId}`).then(response => response.data)
     },
     updateStatus(status: string) {
         return axiosInstance
-            .put(`/profile/status`, {
+            .put<DefaultResponseType<{}>>(`/profile/status`, {
                 status
             }).then(response => response.data)
     }
@@ -54,12 +89,12 @@ export const profileAPI = {
 export const authAPI = {
     authMe() {
         return axiosInstance
-            .get('/auth/me').then(response => response.data)
+            .get<DefaultResponseType<MeResponseDataType>>('/auth/me').then(response => response.data)
     },
 
     loginMe(email: string, password: string, rememberMe: boolean) {
         return axiosInstance
-            .post('/auth/login', {
+            .post<LoginResponseType>('/auth/login', {
                 email,
                 password,
                 rememberMe
@@ -67,8 +102,9 @@ export const authAPI = {
             .then(response => response.data)
     },
 
-    logout(){
-        return axiosInstance.delete('/auth/login').then(response => response.data)
+    logout() {
+        return axiosInstance
+            .delete<DefaultResponseType<{}>>('/auth/login').then(response => response.data)
     }
 
 }
