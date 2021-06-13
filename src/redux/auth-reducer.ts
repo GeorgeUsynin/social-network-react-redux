@@ -46,7 +46,7 @@ export const authReducer = (state: AuthType = initialState, action: AuthReducerA
 
 //thunks
 export const authMe = (): AppThunkType => (dispatch) => {
-    authAPI.authMe()
+    return authAPI.authMe()
         .then(data => {
             if (data.resultCode === ResultCodes.Success) {
                 const {id, email, login} = data.data

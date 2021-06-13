@@ -6,12 +6,13 @@ import {sidebarReducer} from "./sidebar-reducer";
 import {authReducer, AuthReducerACsType, StopSubmitACType} from "./auth-reducer";
 import thunk, {ThunkAction} from 'redux-thunk'
 import {reducer as formReducer} from 'redux-form'
+import {appReducer, AppReducerACsType} from "./app-reducer";
 
 //types
 export type AppStateType = ReturnType<typeof rootReducer>
 
 //type of all actions
-export type AppActionsType = UsersReducerACsType | ProfileReducerACsType | DialogPageACsType | AuthReducerACsType | StopSubmitACType
+export type AppActionsType = UsersReducerACsType | ProfileReducerACsType | DialogPageACsType | AuthReducerACsType | StopSubmitACType | AppReducerACsType
 
 //if we want to use thunk inside thunk we need to use this type
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AppActionsType>
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
     usersPage: usersReducer,
     sidebar: sidebarReducer,
     auth: authReducer,
-    form: formReducer
+    form: formReducer,
+    app: appReducer
 })
 
 

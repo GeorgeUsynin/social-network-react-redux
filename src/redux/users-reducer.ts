@@ -152,7 +152,7 @@ export const followSuccess = (id: number): AppThunkType => (dispatch) => {
     dispatch(toggleFollowingProgress(true, id))
     usersAPI.followUser(id)
         .then(data => {
-                if (data.resultCode === 0) {
+                if (data.resultCode === ResultCodes.Success) {
                     dispatch(follow(id))
                 }
                 dispatch(toggleFollowingProgress(false, id))

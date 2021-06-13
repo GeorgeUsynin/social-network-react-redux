@@ -29,8 +29,12 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId
-        if (!userId && this.props.authorizedUserId) {
-            userId = this.props.authorizedUserId.toString()
+        if (!userId) {
+            this.props.authorizedUserId
+                ?
+                userId = this.props.authorizedUserId.toString()
+                :
+                this.props.history.push('/login')
         }
         //our thunk
         this.props.setUserProfileSuccess(userId)
@@ -38,10 +42,10 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     }
 
     render() {
-
         return (
             <div>
-                <Profile userProfile={this.props.userProfile} status={this.props.status} updateUserStatus={this.props.updateUserStatus}/>
+                <Profile userProfile={this.props.userProfile} status={this.props.status}
+                         updateUserStatus={this.props.updateUserStatus}/>
             </div>
         )
     }
@@ -66,7 +70,6 @@ const mapState = (state: AppStateType): MapStateType => {
 
 //use compose
 export default compose<ComponentType>(
-    connect(mapState, {setUserProfileSuccess, getUserStatus, updateUserStatus}),
     withRouter,
-    withAuthRedirect
+    connect(mapState, {setUserProfileSuccess, getUserStatus, updateUserStatus})
 )(ProfileContainer)

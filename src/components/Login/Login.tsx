@@ -2,7 +2,6 @@ import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import {loginMe} from "../../redux/auth-reducer";
-import {AppStateType} from "../../redux/redux-store";
 import {Element} from "../common/FormsControls/FormsControls";
 import {required} from "../../utils/validators/validators";
 import cls from './../common/FormsControls/FormsControls.module.css'
