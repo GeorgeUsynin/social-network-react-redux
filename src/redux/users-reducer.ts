@@ -135,7 +135,7 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersR
 
 
 //thunks
-export const getUsers = (currentPage: number, pageSize: number): AppThunkType => (dispatch) => {
+export const requestUsers = (currentPage: number, pageSize: number): AppThunkType => (dispatch) => {
     //показываем preloader пока загружаются данные с сервера
     dispatch(setIsFetching(true))
 

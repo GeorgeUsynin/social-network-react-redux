@@ -3,6 +3,7 @@ import cls from "./Users.module.css";
 import {v1} from "uuid";
 import {UserType} from "../../redux/users-reducer";
 import {User} from "./User";
+import {AppStateType} from "../../redux/redux-store";
 
 type UsersPropsType = {
     users: Array<UserType>
