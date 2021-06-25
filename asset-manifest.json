@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/social-network-react-redux/static/css/main.7ce33ca9.chunk.css",
+    "main.js": "/social-network-react-redux/static/js/main.0010edb0.chunk.js",
+    "main.js.map": "/social-network-react-redux/static/js/main.0010edb0.chunk.js.map",
+    "runtime-main.js": "/social-network-react-redux/static/js/runtime-main.45dd95a5.js",
+    "runtime-main.js.map": "/social-network-react-redux/static/js/runtime-main.45dd95a5.js.map",
+    "static/js/2.0309b881.chunk.js": "/social-network-react-redux/static/js/2.0309b881.chunk.js",
+    "static/js/2.0309b881.chunk.js.map": "/social-network-react-redux/static/js/2.0309b881.chunk.js.map",
+    "static/js/3.d830a2ff.chunk.js": "/social-network-react-redux/static/js/3.d830a2ff.chunk.js",
+    "static/js/3.d830a2ff.chunk.js.map": "/social-network-react-redux/static/js/3.d830a2ff.chunk.js.map",
+    "index.html": "/social-network-react-redux/index.html",
+    "static/css/main.7ce33ca9.chunk.css.map": "/social-network-react-redux/static/css/main.7ce33ca9.chunk.css.map",
+    "static/js/2.0309b881.chunk.js.LICENSE.txt": "/social-network-react-redux/static/js/2.0309b881.chunk.js.LICENSE.txt",
+    "static/media/nodejs.a02ab828.png": "/social-network-react-redux/static/media/nodejs.a02ab828.png",
+    "static/media/preloader.4d3101de.svg": "/social-network-react-redux/static/media/preloader.4d3101de.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.45dd95a5.js",
+    "static/js/2.0309b881.chunk.js",
+    "static/css/main.7ce33ca9.chunk.css",
+    "static/js/main.0010edb0.chunk.js"
+  ]
+}
